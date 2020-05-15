@@ -53,6 +53,6 @@ $route['default_controller'] = '403';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['admin_panel/([a-z]+)/(:any)'] = "admin_panel/HomeAdmin/$1/$2";
-$route['admin_panel/([a-z]+)'] = "admin_panel/HomeAdmin/$1";
-$route['admin_panel'] = "admin_panel/HomeAdmin";
+$route['admin_panel/([a-z]+)/(:any)'] = "admin_panel/AdminHome/$1/$2";
+$route['admin_panel/([a-z]+)'] = "admin_panel/AdminHome/$1";
+$route['admin_panel'] = "admin_panel/AdminHome";

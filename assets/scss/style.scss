@@ -1,0 +1,168 @@
+
+/*------------------------------------------------------------------
+[Master Stylesheet]
+
+Project        :   Xino - HTML5 Bootstrap Admin Template
+Version        :   V.1
+Create Date    :   23/03/20
+Copyright      :   Spruko Technologies Private Limited 
+Author         :   SprukoSoft
+Author URL     :   https://themeforest.net/user/sprukosoft
+Support	       :   support@spruko.com
+License        :   Licensed under ThemeForest License
+
+-------------------------------------------------------------------*/
+/*
+
+1. accordion
+2. alerts
+3. avatar
+4. badge
+5. breadcrumb
+6. buttons
+7. cards
+8. carousel
+9. custom-control
+10. dropdown
+11. grid
+12. input-group
+13. list-group
+14. modal
+15. navigation
+16. pagination
+17. progress
+18. table
+19. tags
+20. tooltip-popover
+21. form-control
+22. content
+23. custom-styles
+24. footer
+25. header
+26. horizontal-menu
+27. icon-bar
+28. navbar
+29. sidebar
+30. template-styles
+31. charts
+32. count-down
+33. datatable
+34. datetimepicker
+35. forms
+36. navbar
+37. parsely
+38. perfectscrollbar
+39. quill
+40. rangeslider
+41. ratings
+42. select2
+43. spectrum
+44. timeline
+45. ui-datepicker
+46. vector-map
+47. wizard
+48. calendar
+49. chat
+50. contact
+51. custom
+52. invoice
+53. mail
+54. profile
+55. background
+56. border
+57. height
+58. margin
+59. opacity
+60. padding
+61. position
+62. typhogaphy
+63. width
+64. custom
+
+/* ######### Fonts ######### */
+@import "bootstrap/fonts/fonts";
+
+
+/* ######### Variables #########*/
+@import "variables";
+
+
+/* ######### Bootsrap #########*/
+@import "bootstrap/accordion";
+@import "bootstrap/alerts";
+@import "bootstrap/avatar";
+@import "bootstrap/badge";
+@import "bootstrap/breadcrumb";
+@import "bootstrap/buttons";
+@import "bootstrap/cards";
+@import "bootstrap/carousel";
+@import "bootstrap/custom-control";
+@import "bootstrap/dropdown";
+@import "bootstrap/grid";
+@import "bootstrap/input-group";
+@import "bootstrap/list-group";
+@import "bootstrap/modal";
+@import "bootstrap/navigation";
+@import "bootstrap/pagination";
+@import "bootstrap/progress";
+@import "bootstrap/table";
+@import "bootstrap/tags";
+@import "bootstrap/tooltip-popover";
+@import "bootstrap/form-control";
+
+/* ######### Layouts #########*/
+@import "layouts/content";
+@import "layouts/custom-styles";
+@import "layouts/footer";
+@import "layouts/header";
+@import "layouts/horizontal-menu";
+@import "layouts/icon-bar";
+@import "layouts/navbar";
+@import "layouts/sidebar";
+@import "layouts/template-styles";
+
+/* ######### Lib #########*/
+@import "lib/charts";
+@import "lib/count-down";
+@import "lib/datatable";
+@import "lib/datetimepicker";
+@import "lib/forms";
+@import "lib/navbar";
+@import "lib/parsely";
+@import "lib/perfectscrollbar";
+@import "lib/quill";
+@import "lib/rangeslider";
+@import "lib/ratings";
+@import "lib/select2";
+@import "lib/spectrum";
+@import "lib/timeline";
+@import "lib/ui-datepicker";
+@import "lib/vector-map";
+@import "lib/wizard";
+
+/* ######### Template #########*/
+@import "template/calendar";
+@import "template/chat";
+@import "template/contact";
+@import "template/custom";
+@import "template/invoice";
+@import "template/mail";
+@import "template/profile";
+
+/* ######### Util #########*/
+@import "util/background";
+@import "util/border";
+@import "util/height";
+@import "util/margin";
+@import "util/opacity";
+@import "util/padding";
+@import "util/position";
+@import "util/typhogaphy";
+@import "util/width";
+@import "util/custom";
+
+
+
+
+
+

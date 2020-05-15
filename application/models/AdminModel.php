@@ -45,4 +45,11 @@ class AdminModel extends CI_model
 
 		return $data;
 	}
+
+	public function getUnders($under)
+	{
+		$this->db->where("userid",$under);
+		$get = $this->db->get("tree");
+		return $get;
+	}
 }

@@ -57,6 +57,11 @@
 			    						<input type="radio" value="three" name="side"> 3rd
 			    						<input type="radio" value="fourth" name="side"> 4th
 			    						<input type="radio" value="fifth" name="side"> 5th
+			    						<input type="radio" value="sixth" name="side"> 6th
+			    						<input type="radio" value="seventh" name="side"> 7th
+			    						<input type="radio" value="eighth" name="side"> 8th
+			    						<input type="radio" value="ninth" name="side"> 9th
+			    						<input type="radio" value="tenth" name="side"> 10th
 			    					</div>
 			    					<div class="form-group">
 			    						<button name="join_user" class="btn btn-primary">Save</button>

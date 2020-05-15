@@ -53,18 +53,29 @@ class Join extends CI_controller
 			}
 		}else{
 			$this->session->set_flashdata("Feed","User ID Exist");
-						return redirect("admin_panel/HomeAdmin");
+						return redirect("admin_panel/HomeAdmin"); 
 			die();
 		}
 		
 			
 		
 			
-		$query = mysqli_query($con,"INSERT INTO user(`name`,`user_id`,`email`,`password`,`mobile`,`address`,`account`,`under_userid`,`side`) VALUES('$name','$userid','$email','$password','$mobile','$address','$account','$under_userid','$side')");
+		$query1 = mysqli_query($con,"INSERT INTO user(`name`,`user_id`,`email`,`password`,`mobile`,`address`,`account`,`under_userid`,`side`) VALUES('$name','$userid','$email','$password','$mobile','$address','$account','$under_userid','$side')");
+
+		if(!$query1)
+		{
+			echo mysqli_error($con);
+			die();
+		}
 		
 		//Insert into Tree
 		//So that later on we can view tree.
-		$query = mysqli_query($con,"INSERT INTO tree(`userid`) VALUES('$userid')");
+		$query2 = mysqli_query($con,"INSERT INTO tree(`userid`) VALUES('$userid')");
+		if(!$query2)
+		{
+			echo mysqli_error($con);
+			die();
+		}
 		
 		//Insert to side
 		$query = mysqli_query($con,"UPDATE tree SET `$side`='$userid' WHERE userid='$under_userid'");
