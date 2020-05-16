@@ -13,7 +13,7 @@
 					</div>
 					<div class="main-header-center">
 						<div class="responsive-logo">
-							<a href="<?= base_url(); ?>">Logo</a>
+							<a href="<?= base_url(); ?>"><img src="<?= base_url(); ?>assets/img/brand/logo.png" class="mobile-logo" alt="logo"></a>
 						</div>
 					</div>
 					<div class="main-header-right">

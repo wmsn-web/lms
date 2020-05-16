@@ -52,4 +52,194 @@ class AdminModel extends CI_model
 		$get = $this->db->get("tree");
 		return $get;
 	}
+
+	public function getAllMembers()
+	{
+		$this->db->order_by("join_date","ASC");
+		$this->db->where("user_id !=","ESM-202020");
+		$get = $this->db->get("es_users");
+		$result = $get->result();
+		if($get->num_rows() == 0)
+		{
+			$data = array();
+		}
+		else
+		{
+			foreach ($result as $key) {
+			$userId = $key->user_id;
+			$this->db->where("userid",$userId);
+			$query = $this->db->get("tree");
+			$trRow = $query->row();
+			$leftcount = $trRow->leftcount;
+			$rightcount = $trRow->rightcount;
+			$threecount = $trRow->threecount;
+			$fourthcount = $trRow->fourthcount;
+			$fifthcount = $trRow->fifthcount;
+			$sixthcount = $trRow->sixthcount;
+			$seventhcount = $trRow->seventhcount;
+			$eighthcount = $trRow->eighthcount;
+			$ninthcount = $trRow->ninthcount;
+			$tenthcount = $trRow->tenthcount;
+			$total = $leftcount+$rightcount+$threecount+$fourthcount+$fifthcount+$sixthcount+$seventhcount+$eighthcount+$ninthcount+$tenthcount;
+			$income = $trRow->tot_amount;
+				$data[] = array
+								(
+									"user_id"	=>$key->user_id,
+									   "name"	=>$key->name,
+									 "mobile"	=>$key->phone,
+									  "under"	=>$key->under_userid,
+									  "total"	=>$total,
+									 "income"	=>$income,
+									 "join_date"	=>$key->join_date
+								);
+			}
+		}
+
+		return $data;
+	}
+
+	public function submitBalance($userid,$amount)
+	{
+		$this->db->where("user_id",$userid);
+		$get = $this->db->get("es_users");
+		$row = $get->row();
+		$under_userid = $row->under_userid;
+		$side = $row->side;
+		$temp_under_userid = $under_userid;
+
+		$total_count=1;
+		$i=1;
+
+		while($total_count>0){
+			$i;
+			$this->db->where("userid",$temp_under_userid);
+			$get2 = $this->db->get("tree");
+			$row2 = $get2->row();
+			$current_temp_amount_count = $row2->tot_amount + $amount;
+			$temp_under_userid;
+			$temp_side_count;
+			$this->db->where("userid",$temp_under_userid);
+			$this->db->update("tree",["tot_amount"=>$current_temp_amount_count]);
+			date_default_timezone_set('Asia/Kolkata');
+			$datas = array
+						(
+							"user_id"=>$temp_under_userid,
+							"Notice" =>"Amount Purchased by ".$userid,
+							"amount" =>$amount,
+							"date"   =>date('d-m-Y H:i:s')
+
+						);
+			$this->db->insert("transaction_notice",$datas);
+			
+			$tree_data = $this->tree($temp_under_userid);
+					
+					
+					$temp_left_count = $tree_data['leftcount'];
+					$temp_right_count = $tree_data['rightcount'];
+
+				$next_under_userid = $this->getUnderId($temp_under_userid);
+				$temp_side = $this->getUnderIdPlace($temp_under_userid);
+				$temp_side_count = $temp_side.'count';
+				$temp_under_userid = $next_under_userid;	
+				
+				$i++;
+				if($temp_under_userid==""){
+				$total_count=0;
+			}
+		}
+
+		return "succ";
+	}
+	function checkUserId($userid)
+{
+
+$chech = $this->db->query("SELECT * FROM es_users WHERE user_id='$userid'");
+	$num = $chech->num_rows();
+	if($num>0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+function emailCheck($email)
+{
+	
+	$checkUserMail = $this->db->query("SELECT * FROM es_users WHERE email='$email'");
+    $num = $checkUserMail->num_rows();
+    if($num>0)
+    {
+    	return false;
+    }
+    else
+    {
+    	return true;
+    }
+    
+}
+
+function emailUnder($under_userid)
+{
+	global $con;
+	$emailUnder =  $this->db->query("SELECT * FROM es_users WHERE user_id='$under_userid'");
+    $num = $emailUnder->num_rows();
+    if($num>0)
+    {
+    	return true;
+    }
+    else
+    {
+    	return false;
+    }
+    
+}
+
+function tree($userid){
+	//global $con;
+	$data = array();
+	$query = $this->db->query("SELECT * from tree WHERE userid='$userid'");
+	$result = $query->row();
+	$data['left'] = $result->left;
+	$data['right'] = $result->right;
+	$data['three'] = $result->three;
+	$data['fourth'] = $result->fourth;
+	$data['fifth'] = $result->fifth;
+
+
+	$data['leftcount'] = $result->leftcount;
+	$data['rightcount'] = $result->rightcount;
+	$data['threecount'] = $result->threecount;
+	$data['fourthcount'] = $result->fourthcount;
+	$data['fifthcount'] = $result->fifthcount;
+	
+	return $data;
+}
+function getUnderId($userid){
+	global $con;
+	$query = $this->db->query("SELECT * FROM es_users WHERE user_id='$userid'");
+	$result = $query->row();
+	return $result->under_userid;
+}
+function getUnderIdPlace($userid){
+	global $con;
+	$query = $this->db->query("SELECT * FROM es_users WHERE user_id='$userid'");
+	$result = $query->row();
+	return $result->side;
+}
+
+function side_check($under_userid,$side){
+	
+	
+	$query =$this->db->query("select * from tree where userid='$under_userid'");
+	$result = $query->row();
+	$side_value = $result->$side;
+	if($side_value==''){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
 }

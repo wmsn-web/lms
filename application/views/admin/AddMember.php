@@ -55,6 +55,9 @@
 				?>
 							<form action="<?= base_url('admin_panel/AddMember/insertMem'); ?>" method="post">
 								<div class="row">
+									<div class="form-group col-md-12">
+										<h5 class="card-title">Personal Information</h5>
+									</div>
 								<div class="form-group col-md-6">
 									<label>Full Name</label>
 									<input type="text" name="name" class="form-control" required="required">
@@ -75,6 +78,13 @@
 										<option value="Female">Female</option>
 									</select>
 								</div>
+								<div class="form-group col-md-12">
+									<label>Address</label>
+									<input type="text" name="addr" class="form-control" required="required">
+								</div>
+								<div class="form-group col-md-12">
+										<h5 class="card-title">Contact Information</h5>
+									</div>
 								<div class="form-group col-md-6">
 									<label>Mobile Number</label>
 									<input type="text" name="phone" maxlength="10" class="form-control" required="required">
@@ -139,19 +149,26 @@
 										<label>Confirm Account Number <small id="msg"></small></label>
 										<input type="text" id="conAc" name="" class="form-control" required="required">
 								    </div>
+								    <input type="hidden" name="userid" value="<?=  "ES-".mt_rand(100000000,99999999999); ?>">
+								    <input type="hidden" name="under" value="<?=  $_GET['under']; ?>">
 								
 								<div class="form-group col-md-12">
-									<button class="btn btn-primary">Login</button>
+									<button id="reg" class="btn btn-primary">Register</button><br>
+									
 								</div>
 							</form>
 						<?php }else{ ?>
 							<form action="<?= base_url('admin_panel/AddMember/'); ?>" method="get">
 								<div class="form-group col-md-12">
 									<label>Sponsor ID</label>
-									<input type="text" name="under"  class="form-control" required="required" autocomplete="off">
+									<input type="text" name="under"  class="form-control" required="required"  id="usr" autocomplete="off">
+										<small class="text-danger" id="msg"></small>
+										<div class="srcRes">
+											<ul id="usrData"></ul>
+										</div>
 								</div>
 								<div class="form-group col-md-12">
-									<button class="btn btn-primary">Next</button>
+									<button id="bnt" class="btn btn-primary">Next</button>
 								</div>
 							</form>
 						<?php } ?>
@@ -185,14 +202,57 @@
 					{
 						$("#msg").html("Account Number Matched.");
 						$("#msg").css("color","#090");
+						$("#reg").attr("disabled",false);
 					}
 					else
 					{
-						$("#msg").html("Account Number Does Not Match!.");
+						$("#msg").html("Does Not Match!.");
 						$("#msg").css("color","#f00");
+						$("#reg").attr("disabled",true);
 					}
 				});
+
+				$("#usr").keyup(function(){
+					var usr = $("#usr").val();
+
+					$.post("<?= base_url('admin_panel/AddBalance/getUser'); ?>",
+						{
+							user: usr
+						},
+						function(data,status)
+						{
+							if(data == "false")
+							{
+								$(".srcRes").hide();
+								$("#msg").html("Invalid User ID");
+								$("#bnt").attr("disabled",true);
+
+							}
+							else
+							{
+								if(usr=="")
+								{
+									$(".srcRes").hide();
+								}
+								else
+								{
+									$(".srcRes").show();
+									$("#usrData").html(data);
+									$("#bnt").attr("disabled",true);
+								}
+							}
+							
+						}
+						)
+				});
 			});
+			function getText(val)
+		{
+			$("#usr").val(val);
+			$(".srcRes").hide();
+			$("#bnt").attr("disabled",false);
+		}
+			
 		</script>
 	</body>
 </html>
