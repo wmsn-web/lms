@@ -21,7 +21,7 @@
 							<?php if($feed = $this->session->flashdata("Feed")){ ?>
 								<span class="text-danger"><?= $feed; ?></span>
 							<?php } ?>
-							<form action="<?= base_url('admin_panel/Login/loginProcess'); ?>" method="post">
+							<form action="<?= base_url(); ?>admin_panel/Login/loginProcess?refer=<?= @$_GET['refer']; ?>" method="post">
 								<div class="form-group">
 									<label>Username</label>
 									<input type="text" name="user" class="form-control" required="required">

@@ -53,19 +53,10 @@
 							<li><a class="slide-item" href="chart-peity.html">Chart-peity</a></li>
 						</ul>
 					</li>
-					<li><h3>OTHER PAGES</h3></li>
+					<li><h3>Settings</h3></li>
 					<li class="slide">
-						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-files"></i><span class="side-menu__label">Pages</span><i class="angle fe fe-chevron-down"></i></a>
-						<ul class="slide-menu">
-							<li><a class="slide-item" href="profile.html">Profile</a></li>
-							<li><a class="slide-item" href="editprofile.html">Edit-Profile</a></li>
-							<li><a class="slide-item" href="invoice.html">Invoice</a></li>
-							<li><a class="slide-item" href="pricing.html">Pricing</a></li>
-							<li><a class="slide-item" href="gallery.html">Gallery</a></li>
-							<li><a class="slide-item" href="todotask.html">Todotask</a></li>
-							<li><a class="slide-item" href="faq.html">Faqs</a></li>
-							<li><a class="slide-item" href="empty.html">Empty Page</a></li>
-						</ul>
+						<a class="side-menu__item"  href="<?= base_url('admin_panel/Settings'); ?>"><i class="side-menu__icon fas fa-cog"></i><span class="side-menu__label">Settings</span></a>
+						
 					</li>
 					<li class="slide">
 						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-shopping-cart-full"></i><span class="side-menu__label">Ecommerce</span><span class="badge badge-success side-badge">3</span><i class="angle fe fe-chevron-down"></i></a>

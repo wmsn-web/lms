@@ -34,7 +34,7 @@ class Login extends CI_controller
 				$back = base_url('admin_panel/AdminHome/dashboard');
 				if($_GET['refer'] == "")
 			{
-				$back = base_url('admin_panel/AdminHome/dashboard');
+				$back = base_url('admin_panel/AdminHome/dashboard'); 
 			}
 			else
 			{

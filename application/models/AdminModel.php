@@ -26,7 +26,7 @@ class AdminModel extends CI_model
 			$fifthcount = $key->fifthcount;
 
 			$this->db->where("user_id",$userid);
-			$q = $this->db->get("user");
+			$q = $this->db->get("es_users");
 			$row = $q->row();
 
 			$total = $leftcount+$rightcount+$threecount+$fourthcount+$fifthcount;
@@ -37,7 +37,7 @@ class AdminModel extends CI_model
 					"total"=>$total,
 					"name"=>$row->name,
 					"email"=>$row->email,
-					"mobile"=>$row->mobile,
+					"mobile"=>$row->phone,
 					"position"=>$row->side,
 					"under"=>$row->under_userid
 				);
@@ -90,6 +90,7 @@ class AdminModel extends CI_model
 									  "under"	=>$key->under_userid,
 									  "total"	=>$total,
 									 "income"	=>$income,
+									 "level"	=>$key->level,
 									 "join_date"	=>$key->join_date
 								);
 			}
@@ -242,4 +243,58 @@ function side_check($under_userid,$side){
 		return false;
 	}
 }
+
+	public function GetUserById($userId)
+	{
+		$this->db->where("user_id",$userId);
+		$getUser = $this->db->get("es_users");
+		if($getUser->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$rows = $getUser->row();
+			$data = array
+						(
+							"name"		=>$rows->name,
+							"email"		=>$rows->email,
+							"phone"		=>$rows->phone,
+							"address"	=>$rows->address,
+							"father"	=>$rows->father_name,
+							"dob"		=>$rows->dob,
+							"gender"	=>$rows->gender,
+							"side"		=>$rows->side,
+							"memType"	=>$rows->mem_type,
+							"bank"		=>$rows->bank,
+							"ifsc"		=>$rows->ifsc,
+							"ac_no"		=>$rows->ac_no,
+							"userId"	=>$rows->user_id,
+							"level"		=>$rows->level
+						);
+		}
+
+		return $data;
+	}
+
+	public function checkChangeLevel()
+	{
+		date_default_timezone_set('Asia/Kolkata');
+		$date = date('Y-m-d');
+		$set = $this->db->get("settings")->row();
+		$duration = $set->level_chng_duration;
+		$GT = $this->db->query("SELECT * FROM  es_users where last_update < now() - INTERVAL $duration DAY");
+		$row = $GT->result();
+
+		foreach ($row as $key) {
+			$level = $key->level;
+			$nowLvl = $level+1;
+
+			$mem_type = $key->mem_type;
+			
+			$this->db->query("UPDATE  `es_users` SET `level`='$nowLvl',`last_update`='$date' WHERE `last_update` < now() - INTERVAL $duration DAY AND `mem_type` = 'Package'");
+			
+		}
+
+	}
 }

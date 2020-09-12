@@ -44,6 +44,7 @@
 												<th>Join Date</th>
 												<th>User ID</th>
 												<th>Full Name</th>
+												<th>Rank</th>
 												<th>Mobile Number</th>
 												<th>Under User</th>
 												<th>Down Count</th>
@@ -54,8 +55,13 @@
 											<?php foreach($data as $key) { ?>
 												<tr>
 													<td><?= $key['join_date']; ?></td>
-													<td><?= $key['user_id']; ?></td>
+													<td>
+														<a href="<?= base_url('admin_panel/EditMember/index/'.$key['user_id'].'/?under='.$key['under']); ?>">
+															<?= $key['user_id']; ?>
+														</a>
+													</td>
 													<td><?= $key['name']; ?></td>
+													<td>C.L-<?= $key['level']; ?></td>
 													<td><?= $key['mobile']; ?></td>
 													<td><?= $key['under']; ?></td>
 													<td><?= $key['total']; ?></td>
@@ -68,6 +74,7 @@
 												<th>Join Date</th>
 												<th>User ID</th>
 												<th>Full Name</th>
+												<th>Rank</th>
 												<th>Mobile Number</th>
 												<th>Under User</th>
 												<th>Down Count</th>

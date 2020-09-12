@@ -359,3 +359,9 @@ input:checked + .slider:before {
 	border-bottom: 1px solid #E3E3E3;
 	cursor: pointer;
 }
+.tblInput
+{
+	width:70px;
+	border: none;
+}
+

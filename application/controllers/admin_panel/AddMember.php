@@ -11,7 +11,8 @@ class AddMember extends CI_controller
 		$this->load->model("AdminModel");
 		if(!$this->session->userdata("AdminUsers"))
 		{
-			return redirect("admin_panel/Login");
+			$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+			return redirect("admin_panel/Login?refer=$actual_link");
 		}
 	}
 
@@ -52,12 +53,13 @@ class AddMember extends CI_controller
 		$ifsc = $this->input->post("ifsc");
 		$ac_no = $this->input->post("ac_no");
 		$userid = $this->input->post("userid");
+		$memType = $this->input->post("memType");
 		$under_userid = $this->input->post("under");
 		$account = "4471";
 		$password = password_hash("123456", PASSWORD_DEFAULT);
 		$capping = 500;
 		date_default_timezone_set('Asia/Kolkata');
-		$joinDate = date('d-m-Y');
+		$joinDate = date('Y-m-d');
 
 		if($this->checkUserId($userid))
 		{
@@ -106,6 +108,9 @@ class AddMember extends CI_controller
 								"ifsc"	=>$ifsc,
 							   "ac_no"	=>$ac_no,
 							"password"	=>$password,
+							"mem_type"	=>$memType,
+							"level"		=>1,
+							"last_update"=>$joinDate,
 						   "join_date"	=>$joinDate
 							);
 		$this->db->insert("es_users",$es_usersData);

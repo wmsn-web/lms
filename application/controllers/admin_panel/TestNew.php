@@ -10,11 +10,11 @@ class TestNew extends CI_controller
 	function index()
 	{
 		$amount = 200;
-		$userid = "U-164343";
+		$userid = "ES-60262889435";
 		
 
 		$this->db->where("user_id",$userid);
-		$get = $this->db->get("user");
+		$get = $this->db->get("es_users");
 		$row = $get->row();
 		$under_userid = $row->under_userid;
 		$side = $row->side;
@@ -31,8 +31,8 @@ class TestNew extends CI_controller
 			$current_temp_amount_count = $row2->tot_amount + $amount;
 			$temp_under_userid;
 			$temp_side_count;
-			$this->db->where("userid",$temp_under_userid);
-			$this->db->update("tree",["tot_amount"=>$current_temp_amount_count]);
+			//$this->db->where("userid",$temp_under_userid);
+			//$this->db->update("tree",["tot_amount"=>$current_temp_amount_count]);
 			
 			$tree_data = $this->tree($temp_under_userid);
 					
@@ -59,7 +59,7 @@ class TestNew extends CI_controller
 	function checkUserId($userid)
 {
 
-$chech = $this->db->query("SELECT * FROM user WHERE user_id='$userid'");
+$chech = $this->db->query("SELECT * FROM es_users WHERE user_id='$userid'");
 	$num = $chech->num_rows();
 	if($num>0)
 	{
@@ -73,7 +73,7 @@ $chech = $this->db->query("SELECT * FROM user WHERE user_id='$userid'");
 function emailCheck($email)
 {
 	
-	$checkUserMail = $this->db->query("SELECT * FROM user WHERE email='$email'");
+	$checkUserMail = $this->db->query("SELECT * FROM es_users WHERE email='$email'");
     $num = $checkUserMail->num_rows();
     if($num>0)
     {
@@ -89,7 +89,7 @@ function emailCheck($email)
 function emailUnder($under_userid)
 {
 	global $con;
-	$emailUnder =  $this->db->query("SELECT * FROM user WHERE user_id='$under_userid'");
+	$emailUnder =  $this->db->query("SELECT * FROM es_users WHERE user_id='$under_userid'");
     $num = $emailUnder->num_rows();
     if($num>0)
     {
@@ -124,7 +124,7 @@ function tree($userid){
 }
 function getUnderId($userid){
 	global $con;
-	$query = $this->db->query("SELECT * FROM user WHERE user_id='$userid'");
+	$query = $this->db->query("SELECT * FROM es_users WHERE user_id='$userid'");
 	$result = $query->row();
 	return $result->under_userid;
 }
