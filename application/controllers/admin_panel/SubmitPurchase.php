@@ -51,6 +51,26 @@ class SubmitPurchase extends CI_controller
 		$notes = $this->input->post("notes");
 
 		$submitBalance = $this->AdminModel->submitBalance($userid,$amount,$notes);
+		
+		if(!empty($submitBalance)
+		{
+			foreach ($submitBalance as $key) {
+				#Get data from Wallet
+				$this->db->where("user_id",$key['userid']);
+				$this->db->select_sum("deposit");
+				$gtWallet = $this->db->get("user_wallet")->row();
+				$bal = $gtWallet->deposit;
+
+				#Get end user data from users
+
+				$this->db->where("user_id",$key['userid']);
+				$user = $this->db->get("es_users")->row();
+				$email = $user->email;
+				$name = $user->name;
+				$amount =$key->amount;
+				$tpcb = $key->deposit;
+			}
+		}
 	}
 
 }

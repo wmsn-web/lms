@@ -104,7 +104,7 @@ class AdminModel extends CI_model
 		$this->db->where("user_id",$userid);
 		$get = $this->db->get("es_users");
 		$row = $get->row();
-		echo $userId = $row->user_id;
+		$userId = $row->user_id;
 		$under_userid = $row->under_userid;
 		$side = $row->side;
 		$temp_under_userid = $under_userid;
@@ -114,9 +114,28 @@ class AdminModel extends CI_model
 			$dt = date_create($date);
 			$monthyear = date_format($dt,"F")."-".date_format($dt,"Y");
 
+			$UserLevel = $row->level;
+
+			$this->db->where("level",$UserLevel);
+			$gtSetting = $this->db->get("level_setup")->row();
+			$spcb = @$gtSetting->spcb /100;
+			$prcntSp = $amount*$spcb;
+
+			$wlletdataSingle = array
+						(
+							"user_id"=>$userId,
+							"notes" =>$notes,
+							"deposit" =>$prcntSp,
+							"tr_date"   =>date('d-m-Y H:i:s'),
+							"yearmonth"=>$monthyear
+
+						);
+			$this->db->insert("user_wallet",$wlletdataSingle);
+
 		$total_count=1;
 		$i=1;
 
+		$allTempUser = array();
 		while($total_count>0){
 			$i;
 			$this->db->where("userid",$temp_under_userid);
@@ -139,11 +158,36 @@ class AdminModel extends CI_model
 						);
 			$this->db->insert("transaction_notice",$datas);
 
-			
-			
+			$this->db->where("user_id",$temp_under_userid);
+			$getlvl = $this->db->get("es_users")->row();
+			$underUserLevel = $getlvl->level;
+
+			$this->db->where("level",$underUserLevel);
+			$gtSetting = $this->db->get("level_setup")->row();
+			$tpcb = @$gtSetting->tpcb /100;
+			$prcnt = $amount*$tpcb;
+			$tpcbAmt = $amount+$prcnt;
+
+			$wlletdatas = array
+						(
+							"user_id"=>$temp_under_userid,
+							"notes" =>$notes,
+							"deposit" =>$prcnt,
+							"tr_date"   =>date('d-m-Y H:i:s'),
+							"yearmonth"=>$monthyear
+
+						);
+			$this->db->insert("user_wallet",$wlletdatas);
+
+			$allTempUser[] = array
+									(
+										"userid"=>$temp_under_userid,
+										"deposit" =>$prcnt,
+										"tr_date"   =>date('d-m-Y H:i:s'),
+										"amount" =>$amount
+									);
+
 			$tree_data = $this->tree($temp_under_userid);
-					
-					
 					$temp_left_count = $tree_data['leftcount'];
 					$temp_right_count = $tree_data['rightcount'];
 
@@ -169,7 +213,7 @@ class AdminModel extends CI_model
 						);
 			$this->db->insert("my_transaction",$datas2);
 
-		return "succ";
+		return $allTempUser;
 	}
 	function checkUserId($userid)
 {

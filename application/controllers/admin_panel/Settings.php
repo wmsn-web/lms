@@ -39,10 +39,10 @@ class Settings extends CI_controller
 	{
 		$tblRow = $this->input->post("tblRow");
 		$id = $this->input->post("id");
-		$tdval = $this->input->post("tdval");
+		$tdval = $this->input->post("tdval"); 
 
 		if($tblRow == "lv"){$tblR = "level";}
-		elseif($tblRow == "sp"){$tblR = "level";}
+		elseif($tblRow == "sp"){$tblR = "spcb";}
 		elseif($tblRow == "tp"){$tblR = "tpcb";}
 		elseif($tblRow == "tr"){$tblR = "target";}
 		else{$tblR = "";}
