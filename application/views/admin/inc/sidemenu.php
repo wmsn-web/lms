@@ -30,16 +30,12 @@
 					</li>
 					
 
-					<li><h3>Forms</h3></li>
+					<li><h3>User Transactions</h3></li>
 					<li class="slide">
-						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-pencil-alt"></i><span class="side-menu__label">Forms</span><span class="badge badge-info side-badge">6</span><i class="angle fe fe-chevron-down"></i></a>
+						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-pencil-alt"></i><span class="side-menu__label">User Transactions</span><span class="badge badge-info side-badge">6</span><i class="angle fe fe-chevron-down"></i></a>
 						<ul class="slide-menu">
-							<li><a class="slide-item" href="form-elements.html">Form Elements</a></li>
-							<li><a class="slide-item" href="form-advanced.html">Advanced Forms</a></li>
-							<li><a class="slide-item" href="form-layouts.html">Form Layouts</a></li>
-							<li><a class="slide-item" href="form-validation.html">Form Validation</a></li>
-							<li><a class="slide-item" href="form-wizards.html">Form Wizards</a></li>
-							<li><a class="slide-item" href="form-editor.html">WYSIWYG Editor</a></li>
+							<li><a class="slide-item" href="<?= base_url('admin_panel/SubmitPurchase'); ?>">Submit Purchase</a></li>
+							
 						</ul>
 					</li>
 					<li class="slide">

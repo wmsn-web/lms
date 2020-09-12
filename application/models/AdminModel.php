@@ -99,14 +99,20 @@ class AdminModel extends CI_model
 		return $data;
 	}
 
-	public function submitBalance($userid,$amount)
+	public function submitBalance($userid,$amount,$notes)
 	{
 		$this->db->where("user_id",$userid);
 		$get = $this->db->get("es_users");
 		$row = $get->row();
+		echo $userId = $row->user_id;
 		$under_userid = $row->under_userid;
 		$side = $row->side;
 		$temp_under_userid = $under_userid;
+
+		date_default_timezone_set('Asia/Kolkata');
+			$date = date('Y-m-d');
+			$dt = date_create($date);
+			$monthyear = date_format($dt,"F")."-".date_format($dt,"Y");
 
 		$total_count=1;
 		$i=1;
@@ -121,16 +127,19 @@ class AdminModel extends CI_model
 			$temp_side_count;
 			$this->db->where("userid",$temp_under_userid);
 			$this->db->update("tree",["tot_amount"=>$current_temp_amount_count]);
-			date_default_timezone_set('Asia/Kolkata');
+			
 			$datas = array
 						(
 							"user_id"=>$temp_under_userid,
-							"Notice" =>"Amount Purchased by ".$userid,
+							"notice" =>$notes,
 							"amount" =>$amount,
-							"date"   =>date('d-m-Y H:i:s')
+							"date"   =>date('d-m-Y H:i:s'),
+							"yearmonth"=>$monthyear
 
 						);
 			$this->db->insert("transaction_notice",$datas);
+
+			
 			
 			$tree_data = $this->tree($temp_under_userid);
 					
@@ -148,6 +157,17 @@ class AdminModel extends CI_model
 				$total_count=0;
 			}
 		}
+
+		$datas2 = array
+						(
+							"user_id"=>$userId,
+							"notice" =>$notes,
+							"amount" =>$amount,
+							"date"   =>date('d-m-Y H:i:s'),
+							"yearmonth"=>$monthyear
+
+						);
+			$this->db->insert("my_transaction",$datas2);
 
 		return "succ";
 	}
