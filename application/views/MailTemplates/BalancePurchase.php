@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>AppUI Email Template - Welcome</title>
+        <title></title>
         <meta name="viewport" content="width=device-width" />
         <style type="text/css">
             @media only screen and (max-width: 550px), screen and (max-device-width: 550px) {
@@ -31,13 +31,13 @@
             </tr>
             <tr>
                 <td align="center" bgcolor="#627aad" style="padding: 25px 20px 20px 20px; color: #ffffff; font-family: Arial, sans-serif; font-size: 26px;">
-                    <b>Purchase Amount Successfully Added</b><br>&#8377; 100/-
+                    <b>Purchase Amount Successfully Added</b><br>&#8377; <?= $amount; ?>/-
                 </td>
             </tr>
             <tr>
-                <td align="center" bgcolor="#ffffff" style="padding: 20px 20px 20px 20px; color: #ffffff;">
+                <td align="center" bgcolor="#ffffff" style="padding: 20px 20px 20px 20px; color: #000;">
                     <img src="https://masterclap.in/uploads/thumbs/succ.jpg" alt="Launch Icon" width="200" height="200" style="display:block;" /><br/>
-                    <span>Dear Customer,<br>Your purchase amount successfully added to your account. The percentage of your cashback has  been added to your wallet.</span>
+                    <span>Dear <?= $name; ?>,<br>Your purchase amount successfully added to your account. The percentage of your cashback <?= $csbk; ?> has  been added to your wallet.</span>
                 </td>
             </tr>
             <tr>
@@ -45,7 +45,7 @@
                     <table bgcolor="#627aad" border="0" cellspacing="0" cellpadding="0" class="buttonwrapper">
                         <tr>
                             <td align="center" height="55" style=" padding: 0 35px 0 35px; font-family: Arial, sans-serif; font-size: 22px;" class="button">
-                                <a href="#" style="color: #ffffff; text-align: center; text-decoration: none;">5000/- <br>Wallet Balance</a>
+                                <a href="#" style="color: #ffffff; text-align: center; text-decoration: none;"><?= $bal; ?>/- <br>Wallet Balance</a>
                             </td>
                         </tr>
                     </table>

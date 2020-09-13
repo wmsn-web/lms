@@ -60,17 +60,16 @@
 										</div>
 									</div>
 								</form>
-								<?php
-									$date = date('Y-m-d');
-			$dt = date_create($date);
-			echo $monthyear = date_format($dt,"F")."-".date_format($dt,"Y");
-								?>
+								
 							</div>
 						</div>
 					</div>
 					
 				</div>
 				<!-- row closed -->
+				<?php if($feed = $this->session->flashdata("Feed")): ?>
+					<div class="flashd"><?= $feed; ?></div>
+				<?php endif; ?>
 			</div>
 			<!-- Container closed -->
 		</div>

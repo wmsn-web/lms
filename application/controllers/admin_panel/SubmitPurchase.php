@@ -51,8 +51,31 @@ class SubmitPurchase extends CI_controller
 		$notes = $this->input->post("notes");
 
 		$submitBalance = $this->AdminModel->submitBalance($userid,$amount,$notes);
+
+				$this->db->where("user_id",$userid);
+				$this->db->select_sum("deposit");
+				$gtWallet1 = $this->db->get("user_wallet")->row();
+				$bal1 = $gtWallet1->deposit;
+
+				$this->db->where("user_id",$userid);
+				$user1 = $this->db->get("es_users")->row();
+				$email1 = $user1->email;
+				$name1 = $user1->name;
+				$spcb1 = @$key->deposit;
+
+		$this->load->library('email');
+				//SMTP & mail configuration
+				$config = array(
+				            'protocol' => 'smtp', 
+				            'smtp_host' => 'ssl://smtp.gmail.com', 
+				            'smtp_port' => 465, 
+				            'smtp_user' => 'solutions.web2019@gmail.com', 
+				            'smtp_pass' => 'Goodnight88', 
+				            'mailtype' => 'html', 
+				            'charset' => 'iso-8859-1'
+							);
 		
-		if(!empty($submitBalance)
+		if(!empty($submitBalance))
 		{
 			foreach ($submitBalance as $key) {
 				#Get data from Wallet
@@ -67,10 +90,39 @@ class SubmitPurchase extends CI_controller
 				$user = $this->db->get("es_users")->row();
 				$email = $user->email;
 				$name = $user->name;
-				$amount =$key->amount;
-				$tpcb = $key->deposit;
+				$tpcb = @$key->deposit;
+
+
+							$this->email->initialize($config);
+							$this->email->set_mailtype("html");
+							$this->email->set_newline("\r\n");
+
+							$data = array("amount"=>$amount,"email"=>$email,"name"=>$name,"csbk"=>$tpcb,"bal"=>$bal);
+
+							$mesage = $this->load->view("MailTemplates/BalancePurchase",$data,TRUE);
+							$this->email->to($email);
+							$this->email->from('solutions.web2019@gmail.com','Samridhi');
+							$this->email->subject('Payment Success');
+							$this->email->message($mesage);
+							$this->email->send();
 			}
+
+							$this->email->initialize($config);
+							$this->email->set_mailtype("html");
+							$this->email->set_newline("\r\n");
+
+							$data = array("amount"=>$amount,"email"=>$email1,"name"=>$name1,"csbk"=>$spcb1,"bal"=>$bal1);
+
+							$mesage = $this->load->view("MailTemplates/BalancePurchase",$data,TRUE);
+							$this->email->to($email1);
+							$this->email->from('solutions.web2019@gmail.com','Samridhi');
+							$this->email->subject('Payment Success');
+							$this->email->message($mesage);
+							$this->email->send();
 		}
+
+		$this->session->set_flashdata("Feed","Amount Updated");
+		return redirect("admin_panel/SubmitPurchase");
 	}
 
 }
