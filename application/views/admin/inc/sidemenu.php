@@ -35,6 +35,8 @@
 						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-pencil-alt"></i><span class="side-menu__label">User Transactions</span><span class="badge badge-info side-badge">6</span><i class="angle fe fe-chevron-down"></i></a>
 						<ul class="slide-menu">
 							<li><a class="slide-item" href="<?= base_url('admin_panel/SubmitPurchase'); ?>">Submit Purchase</a></li>
+							<li><a class="slide-item" href="<?= base_url('admin_panel/UserPurchasedHistory'); ?>">All User Purchased History</a></li>
+							<li><a class="slide-item" href="<?= base_url('admin_panel/BusinessReport'); ?>">Business Report</a></li>
 							
 						</ul>
 					</li>

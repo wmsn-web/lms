@@ -12,7 +12,7 @@ class AdminModel extends CI_model
 
 		$data = array();
 		foreach ($result as $key) {
-			$userid = $key->userid;
+			$userid = $key->userid; 
 			$left = $key->left;
 			$right = $key->right;
 			$three = $key->three;
@@ -150,7 +150,7 @@ class AdminModel extends CI_model
 			$datas = array
 						(
 							"user_id"=>$temp_under_userid,
-							"notice" =>$notes,
+							"notice" =>"Purchased by ".$userId,
 							"amount" =>$amount,
 							"date"   =>date('d-m-Y H:i:s'),
 							"yearmonth"=>$monthyear
@@ -360,5 +360,36 @@ function side_check($under_userid,$side){
 			
 		}
 
+	}
+
+	public function getAllTr()
+	{
+		$this->db->where("user_id!=","ESM-202020");
+		$this->db->order_by("id","DESC");
+		$gttr = $this->db->get("transaction_notice");
+		if($gttr->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $gttr->result();
+			foreach ($res as $key) {
+				$this->db->where("user_id",$key->user_id);
+				$gtUsr = $this->db->get("es_users")->row();
+
+				$data[] = array
+							(
+								"date"	=>$key->date,
+								"userid"=>$key->user_id,
+								"name"	=>$gtUsr->name,
+								"notes"	=>$key->notice,
+								"amount"=>$key->amount,
+								"yearmonth"=>$key->yearmonth
+							);
+			}
+		}
+
+		return $data;
 	}
 }

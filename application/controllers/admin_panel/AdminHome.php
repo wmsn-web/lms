@@ -33,4 +33,19 @@ class AdminHome extends CI_controller
 		$this->session->unset_userdata("AdminUsers");
 		return redirect("admin_panel/Login");
 	}
+
+	function validAuth()
+	{
+		 $authNum = $this->input->post("authNum");
+		 $this->db->where("auth_num",$authNum);
+		 $gt = $this->db->get("admin")->num_rows();
+		 if($gt > 0)
+		 {
+		 	echo "done";
+		 }
+		 else
+		 {
+		 	echo "none";
+		 }
+	}
 }
