@@ -82,6 +82,9 @@
 					
 				</div>
 				<!-- row closed -->
+				<?php if($feed = $this->session->flashdata("Feed")): ?>
+					<div class="flashd"><?= $feed; ?></div>
+				<?php endif; ?>
 			</div>
 			<!-- Container closed -->
 			<div class="modal" id="modaldemo8">
