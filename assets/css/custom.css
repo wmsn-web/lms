@@ -368,4 +368,20 @@ input:checked + .slider:before {
 {
 	color: #fff;
 }
+.singlePrice
+{
+	display: inline-block;
+	padding: 15px;
+	background: #FE6400;
+	color: #fff;
+	font-size: 22px;
+	font-weight: bold;
+	text-align: center;
+	border-radius: 6px;
+}
+.right
+{
+	float: right;
+}
+
 

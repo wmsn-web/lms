@@ -392,4 +392,102 @@ function side_check($under_userid,$side){
 
 		return $data;
 	}
+
+	public function getBusinessReport($yrmnth)
+	{
+		$this->db->where("yearmonth",$yrmnth);
+		$getReport = $this->db->get("business_report_history");
+		if($getReport->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $getReport->result();
+			foreach ($res as $key) {
+				$this->db->where("user_id",$key->user_id);
+				$usr = $this->db->get("es_users")->row();
+
+
+				$data[] = array
+							(
+								"userid" =>$key->user_id,
+								"name"	=>@$usr->name,
+								"yearmonth" =>$key->yearmonth,
+								"amount" =>$key->amount
+							);
+			}
+			
+		}
+
+
+		$this->db->where("yearmonth",$yrmnth);
+		$this->db->select_sum("amount");
+		$totBusiness = $this->db->get("business_report_history")->row();
+
+		$this->db->where("yearmonth",$yrmnth);
+		$this->db->select_sum("amount");
+		$totTr = $this->db->get("my_transaction")->row();
+
+		$othrBs = $totTr->amount - $totBusiness->amount;
+
+		$allData = ["data"=>$data,"totTr"=>$totTr->amount,"totBusiness"=>$totBusiness->amount,"othrBs"=>$othrBs];
+		return $allData;
+	}
+
+	public function usrReport($user,$dates)
+	{
+		$this->db->where(["user_id"=>$user,"yearmonth"=>$dates]);
+		$this->db->order_by("id","ASC");
+		$this->db->distinct();
+		$this->db->select("notice");
+		$get = $this->db->get("transaction_notice");
+		if($get->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $get->result();
+			$data = [];
+			foreach ($res as $key) {
+				$notice = $key->notice;
+				$expl = explode(" ", $notice);
+				$this->db->where(["user_id"=>$expl[2],"yearmonth"=>$dates]);
+				$this->db->order_by("id","ASC");
+				$myTr = $this->db->get("my_transaction");
+
+				$this->db->where(["user_id"=>$expl[2],"yearmonth"=>$dates]);
+				$this->db->select_sum("amount");
+				$gtSum = $this->db->get("my_transaction")->row();
+
+				if($myTr->num_rows()==0)
+				{
+					$trData = array();
+				}
+				else
+				{
+					$trRes = $myTr->result();
+					$trData = [];
+					foreach($trRes as $tr):
+						$this->db->where("user_id",$tr->user_id);
+						$gtUsr = $this->db->get("es_users")->row();
+						$trData[] = array
+										(
+											"userid" =>$tr->user_id,
+											"name"	=>$gtUsr->name,
+											"notice"=>$tr->notice,
+											"amount"=>$tr->amount,
+											"date" =>$tr->date
+										);
+					endforeach;	
+				}
+				$data[] = array("mnUser"=>$expl[2],"totAmt"=>$gtSum->amount,"trData"=>$trData);
+			}
+		}
+
+		$dataAll = array("data"=>$data);
+
+		return $dataAll;
+	}
 }

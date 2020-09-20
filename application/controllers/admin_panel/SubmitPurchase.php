@@ -104,7 +104,7 @@ class SubmitPurchase extends CI_controller
 							$this->email->from('solutions.web2019@gmail.com','Samridhi');
 							$this->email->subject('Payment Success');
 							$this->email->message($mesage);
-							$this->email->send();
+							//$this->email->send();
 			}
 
 							$this->email->initialize($config);
@@ -118,7 +118,7 @@ class SubmitPurchase extends CI_controller
 							$this->email->from('solutions.web2019@gmail.com','Samridhi');
 							$this->email->subject('Payment Success');
 							$this->email->message($mesage);
-							$this->email->send();
+							//$this->email->send();
 		}
 
 		$this->session->set_flashdata("Feed","Amount Updated");

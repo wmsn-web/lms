@@ -20,7 +20,7 @@
 				<div class="breadcrumb-header justify-content-between">
 					<div class="my-auto">
 						<div class="d-flex">
-							<h4 class="content-title mb-0 my-auto">Dashboard</h4><span class="text-muted mt-1 tx-13 ml-2 mb-0">/ Business Report</span>
+							<h4 class="content-title mb-0 my-auto">Dashboard</h4><span class="text-muted mt-1 tx-13 ml-2 mb-0">/ User Business Report</span>
 						</div>
 					</div>
 					
@@ -45,65 +45,46 @@
 								</h4>
 							</div>
 							<div class="card-body">
-								<a class="modal-effect" data-effect="effect-slide-in-right" data-toggle="modal" href="#modaldemo8">
-									<button class="btn btn-primary">Create Report - <?= $yrMnth; ?></button>
-								</a>
-
-								
-								<select id="mnth">
-									<?php
-										$mn = $this->db->get("months")->result();
-										foreach($mn as $m):
-											if($m->month == $mnths): $slct = "selected"; else: $slct=""; endif;
-									?>
-										<option value="<?= $m->month; ?>" <?= $slct; ?>><?= $m->month; ?></option>
-									<?php endforeach; ?>
-								</select>
-								<select id="year">
-									<?php
-										for ($i=1999; $i < 2051; $i++):
-											if($i == $years): $slct = "selected"; else: $slct = "";
-											endif;
-									?>
-										<option <?= $slct; ?> value="<?= $i; ?>"><?= $i; ?></option>
-									<?php endfor; ?>
-								</select>
-								<button id="fltr" class="btn btn-warning"><i class="fa fa-filter text-white"></i></button>
 								<div class="table-responsive">
 									<div id="tblJs">
-										<span id="prc" class="right singlePrice">
-												<table class="table table-bordered">
-													<tr>
-														<th>Business =</th>
-														<td><?= $report['totBusiness']; ?></td>
-													</tr>
-													<tr>
-														<th>Others =</th>
-														<td><?= number_format($report['othrBs'],2); ?></td>
-													</tr>
-												</table>
-												Total Business
-												<?= $report['totTr']; ?>
-											</span><br><br>
+										
 									<table id="example2" class="table table-bordered">
 										<thead>
 											<tr>
 												<th>SL</th>
-												<th>Month</th>
 												<th>User ID</th>
-												<th>Amount</th>
+												<th>Transactions</th>
 												
 											</tr>
 										</thead>
 										<tbody id="flttr">
-
-											<?php if(!empty($report['data'])): ?>
-											<?php $i = 1; foreach($report['data'] as $key): $s = $i++; ?>
+											
+											<?php if(!empty($data['data'])): ?>
+											<?php $i = 1; foreach($data['data'] as $key): $s = $i++; ?>
 												<tr>
 													<td><?= $s; ?></td>
-													<td><?= $key['yearmonth']; ?></td>
-													<td><a href="<?= base_url('admin_panel/BusinessReportUser/index/'.$key['userid'].'/'.$key['yearmonth']); ?>"><?= $key['userid']." - ".$key['name']; ?></a></td>
-													<td><?= $key['amount']; ?></td>
+													<td><?= $key['mnUser']; ?><br>
+														<b>Total Amount:</b><i><?= $key['totAmt']; ?></i>
+													</td>
+													<td>
+														<table class="table table-bordered">
+															<tr class="bg-dark text-white">
+																<th>Name</th>
+																<th>Notes</th>
+																<th>Amount</th>
+																<th>Date</th>
+															</tr>
+															<?php foreach ($key['trData'] as $keyTr): ?>
+																<tr>
+																	<td><?= $keyTr['name']; ?></td>
+																	<td><?= $keyTr['notice']; ?></td>
+																	<td><?= $keyTr['amount']; ?></td>
+																	<td><?= $keyTr['date']; ?></td>
+																</tr>
+															<?php endforeach; ?>
+														</table>
+													</td>
+													
 												</tr>
 											<?php endforeach; ?>
 											<?php endif; ?>
