@@ -143,21 +143,21 @@
 								</div>
 									<div class="form-group col-md-6">
 										<label>Bank Name</label>
-										<input type="text" name="bank" class="form-control" required="required">
+										<input type="text" name="bank" class="form-control">
 								    </div>
 								    <div class="form-group col-md-6">
 										<label>IFSC Code</label>
-										<input type="text" name="ifsc" class="form-control" required="required">
+										<input type="text" name="ifsc" class="form-control">
 								    </div>
 								    <div class="form-group col-md-6">
 										<label>Account Number</label>
-										<input type="text" id="ac" name="ac_no" class="form-control" required="required">
+										<input type="text" id="ac" name="ac_no" class="form-control">
 								    </div>
 								    <div class="form-group col-md-6">
 										<label>Confirm Account Number <small id="msg"></small></label>
-										<input type="text" id="conAc" name="" class="form-control" required="required">
+										<input type="text" id="conAc" name="" class="form-control">
 								    </div>
-								    <input type="hidden" name="userid" value="<?=  "ES-".mt_rand(100000000,99999999999); ?>">
+								    <input type="hidden" name="userid" value="<?=  "SM-".mt_rand(100000000,99999999999); ?>">
 								    <input type="hidden" name="under" value="<?=  $_GET['under']; ?>">
 								
 								<div class="form-group col-md-12">

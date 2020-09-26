@@ -171,7 +171,7 @@ class AdminModel extends CI_model
 			$wlletdatas = array
 						(
 							"user_id"=>$temp_under_userid,
-							"notes" =>$notes,
+							"notes" =>"Purchased by ".$userId,
 							"deposit" =>$prcnt,
 							"tr_date"   =>date('d-m-Y H:i:s'),
 							"yearmonth"=>$monthyear
@@ -353,10 +353,11 @@ function side_check($under_userid,$side){
 		foreach ($row as $key) {
 			$level = $key->level;
 			$nowLvl = $level+1;
+			$users = $key->user_id;
 
 			$mem_type = $key->mem_type;
 			
-			$this->db->query("UPDATE  `es_users` SET `level`='$nowLvl',`last_update`='$date' WHERE `last_update` < now() - INTERVAL $duration DAY AND `mem_type` = 'Package'");
+			$this->db->query("UPDATE  `es_users` SET `level`='$nowLvl',`last_update`='$date' WHERE `last_update` < now() - INTERVAL $duration DAY AND `mem_type` = 'Package' AND `user_id`='$users'");
 			
 		}
 
@@ -489,5 +490,87 @@ function side_check($under_userid,$side){
 		$dataAll = array("data"=>$data);
 
 		return $dataAll;
+	}
+
+	public function getUserWallerBal()
+	{
+		$this->db->where("user_id!=",'ESM-202020');
+		$this->db->order_by("id","ASC");
+		$getUser = $this->db->get("es_users");
+		if($getUser->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $getUser->result();
+			foreach ($res as $key):
+				$this->db->where("user_id",$key->user_id);
+				$this->db->select_sum("deposit");
+				$dep = $this->db->get("user_wallet")->row();
+				$totDeposit = $dep->deposit;
+
+				$this->db->where("user_id",$key->user_id);
+				$this->db->select_sum("withdraw");
+				$wthdrw = $this->db->get("user_wallet")->row();
+				$totWithdraw = $wthdrw->withdraw;
+
+				$walletBalance = $totDeposit - $totWithdraw;
+				$data[] = array
+								(
+									"userId" =>$key->user_id,
+									"name"	 =>$key->name,
+									"balance" =>$walletBalance
+								);
+			endforeach;
+		}
+
+		return $data;
+	}
+	public function WalletTransaction($userId)
+	{
+		$this->db->where("user_id",$userId);
+		$get = $this->db->get("user_wallet");
+		if($get->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$this->db->where("user_id",$userId);
+			$getUser = $this->db->get("es_users");
+			if($getUser->num_rows()==0):
+				$name = "";
+			else:
+				$row = $getUser->row();
+				$name = $row->name;
+			endif;
+			$res = $get->result();
+			foreach ($res as $key):
+				$data[] = array
+							(
+								"userId"	=>$userId,
+								"name"		=>$name,
+								"notes"		=>$key->notes,
+								"dep"		=>$key->deposit,
+								"withdraw"	=>$key->withdraw,
+								"date"		=>$key->tr_date
+							);
+			endforeach;
+		}
+
+		$this->db->where("user_id",$userId);
+				$this->db->select_sum("deposit");
+				$dep = $this->db->get("user_wallet")->row();
+				$totDeposit = $dep->deposit;
+
+				$this->db->where("user_id",$userId);
+				$this->db->select_sum("withdraw");
+				$wthdrw = $this->db->get("user_wallet")->row();
+				$totWithdraw = $wthdrw->withdraw;
+
+				$walletBalance = $totDeposit - $totWithdraw;
+				$allData = ["data"=>$data,"bal"=>$walletBalance];
+		return $allData;
 	}
 }

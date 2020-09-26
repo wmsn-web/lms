@@ -1,0 +1,169 @@
+.bnt
+{
+	padding: 5px 15px; text-align: center; border-radius: 4px;
+}
+.bnt-primary
+{
+	background: #6400FE; color: #fff;
+}
+.login
+{
+	margin-top: 30px;
+	margin-bottom: 30px;
+	background: url('../images/sec_bg2.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	padding: 20px;
+}
+.login-bx
+{
+	padding: 10px;
+	border:solid 1px #EAEAEA;
+	box-shadow: 5px 5px 30px grey;
+	margin-top: 10px;
+}
+.nav-tabs{ border:none; }
+.nav-tabs li {padding: 2px 8px; text-align: center;}
+.nav-tabs li a 
+{
+	font-weight: 600;
+	color: #036BF9;
+}
+.nav-tabs li.active
+{
+	border-left: 1px solid #036BF9;
+	border-top: 1px solid #036BF9;
+	border-right: 1px solid #036BF9;
+	border-bottom: 1px solid #fff;
+}
+.tab-content
+{
+	border: 1px solid #036BF9;
+	padding: 8px;
+}
+.top-seperate
+{
+	border-top: solid 1px #ccc;
+}
+.form-froup label b
+{
+	color: #036BF9;
+}
+.form-froup label em
+{
+	color: #FF6400;
+}
+.disp-none
+{
+	display: none;
+}
+.service-policy-item small
+{
+	font-size: 12px;
+	color: #FF6400;
+}
+.cp{cursor: pointer;}
+.top-45
+{
+	padding-top: 45px;
+	padding-bottom: 45px;
+}
+
+.tree ul {
+	padding-top: 20px; position: relative;
+	
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+}
+
+.tree li {
+	float: left; text-align: center;
+	list-style-type: none;
+	position: relative;
+	padding: 20px 5px 0 5px;
+	
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+}
+
+/*We will use ::before and ::after to draw the connectors*/
+
+.tree li::before, .tree li::after{
+	content: '';
+	position: absolute; top: 0; right: 50%;
+	border-top: 1px solid #ccc;
+	width: 50%; height: 20px;
+}
+.tree li::after{
+	right: auto; left: 50%;
+	border-left: 1px solid #ccc;
+}
+
+/*We need to remove left-right connectors from elements without 
+any siblings*/
+.tree li:only-child::after, .tree li:only-child::before {
+	display: none;
+}
+
+/*Remove space from the top of single children*/
+.tree li:only-child{ padding-top: 0;}
+
+/*Remove left connector from first child and 
+right connector from last child*/
+.tree li:first-child::before, .tree li:last-child::after{
+	border: 0 none;
+}
+/*Adding back the vertical connector to the last nodes*/
+.tree li:last-child::before{
+	border-right: 1px solid #ccc;
+	border-radius: 0 5px 0 0;
+	-webkit-border-radius: 0 5px 0 0;
+	-moz-border-radius: 0 5px 0 0;
+}
+.tree li:first-child::after{
+	border-radius: 5px 0 0 0;
+	-webkit-border-radius: 5px 0 0 0;
+	-moz-border-radius: 5px 0 0 0;
+}
+
+/*Time to add downward connectors from parents*/
+.tree ul ul::before{
+	content: '';
+	position: absolute; top: 0; left: 50%;
+	border-left: 1px solid #ccc;
+	width: 0; height: 20px;
+}
+
+.tree li a{
+	border: 1px solid #ccc;
+	padding: 5px 10px;
+	text-decoration: none;
+	color: #666;
+	font-family: arial, verdana, tahoma;
+	font-size: 11px;
+	display: inline-block;
+	
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+}
+
+/*Time for some hover effects*/
+/*We will apply the hover effect the the lineage of the element also*/
+.tree li a:hover, .tree li a:hover+ul li a {
+	background: #c8e4f8; color: #000; border: 1px solid #94a0b4;
+}
+/*Connector styles on hover*/
+.tree li a:hover+ul li::after, 
+.tree li a:hover+ul li::before, 
+.tree li a:hover+ul::before, 
+.tree li a:hover+ul ul::before{
+	border-color:  #94a0b4;
+}
