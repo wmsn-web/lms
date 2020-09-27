@@ -60,6 +60,9 @@ class AddMember extends CI_controller
 		$capping = 500;
 		date_default_timezone_set('Asia/Kolkata');
 		$joinDate = date('Y-m-d');
+		$set = $this->db->get("settings")->row();
+		$duration = $set->level_chng_duration;
+		$start_date = $set->start_date;
 
 		if($this->checkUserId($userid))
 		{
@@ -110,7 +113,7 @@ class AddMember extends CI_controller
 							"password"	=>$password,
 							"mem_type"	=>$memType,
 							"level"		=>1,
-							"last_update"=>$joinDate,
+							"last_update"=>$start_date,
 						   "join_date"	=>$joinDate
 							);
 		$this->db->insert("es_users",$es_usersData);

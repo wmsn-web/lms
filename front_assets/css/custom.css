@@ -6,6 +6,11 @@
 {
 	background: #6400FE; color: #fff;
 }
+.bnt-primary:disabled
+{
+	background: #B6ABFF;
+	cursor: not-allowed;
+}
 .login
 {
 	margin-top: 30px;
@@ -167,3 +172,9 @@ right connector from last child*/
 .tree li a:hover+ul ul::before{
 	border-color:  #94a0b4;
 }
+.card-header
+{
+	padding: 8px;
+	text-align: center;
+}
+.d-none {display: none !important;}

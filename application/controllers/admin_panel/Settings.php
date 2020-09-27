@@ -24,12 +24,15 @@ class Settings extends CI_controller
 	public function updateSetup()
 	{
 		$level_chng_duration = $this->input->post("duration");
+		$date = $this->input->post("dates");
 
 		$SetupData = array
 							(
-								"level_chng_duration"	=>$level_chng_duration
+								"level_chng_duration"	=>$level_chng_duration,
+								"start_date"	=>$date
 							);
 		$this->db->update("settings",$SetupData);
+		$this->db->update("es_users",["last_update"=>$date]);
 
 		$this->session->set_flashdata("Feed","Settings Updated");
 		return redirect("admin_panel/Settings");
@@ -58,6 +61,21 @@ class Settings extends CI_controller
 		{
 			echo "none";
 		}
+	}
+
+	public function minimum_withdraw()
+	{
+		$minimum_withdraw = $this->input->post("minimum_withdraw");
+
+		$SetupData = array
+							(
+								"minimum_withdraw"	=>$minimum_withdraw
+							);
+		$this->db->update("settings",$SetupData);
+
+		$this->session->set_flashdata("Feed","Settings Updated");
+		return redirect("admin_panel/Settings");
+	
 	}
 
 }

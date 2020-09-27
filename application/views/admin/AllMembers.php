@@ -41,6 +41,7 @@
 									<table class="table table-bordered" id="example">
 										<thead>
 											<tr>
+												<th>SL</th>
 												<th>Join Date</th>
 												<th>User ID</th>
 												<th>Full Name</th>
@@ -52,14 +53,17 @@
 											</tr>
 										</thead>
 										<tbody>
-											<?php foreach($data as $key) { ?>
+											<?php $s = 1;
+											 foreach($data as $key) { $sl = $s++; ?>
 												<tr>
+													<td><?= $sl; ?></td>
 													<td><?= $key['join_date']; ?></td>
 													<td>
 														<a href="<?= base_url('admin_panel/EditMember/index/'.$key['user_id'].'/?under='.$key['under']); ?>">
 															<?= $key['user_id']; ?>
 														</a>
 													</td>
+
 													<td><?= $key['name']; ?></td>
 													<td>C.L-<?= $key['level']; ?></td>
 													<td><?= $key['mobile']; ?></td>
@@ -71,6 +75,7 @@
 										</tbody>
 										<tfoot>
 											<tr>
+												<th>SL</th>
 												<th>Join Date</th>
 												<th>User ID</th>
 												<th>Full Name</th>

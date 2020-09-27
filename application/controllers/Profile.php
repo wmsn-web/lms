@@ -64,4 +64,31 @@ class Profile extends CI_controller
 			$this->load->view("fronts/downline",["treeData"=>$getTree]);
 		}
 	}
+
+	public function RequestWidthdraw($userId='')
+	{
+		if(empty($userId))
+		{
+			return redirect("Profile");
+		}
+		else
+		{
+			$requestData = $this->SiteModel->requestData($userId);
+			$dashBoardData = $this->SiteModel->dashBoardData($userId);
+			$this->load->view("fronts/RequestWidthdraw",["dashData"=>$dashBoardData,"request"=>$requestData]);
+		}
+	}
+
+	public function Request()
+	{
+		$userId = $this->input->post("userId");
+		$amt = $this->input->post("amt");
+		date_default_timezone_set("Asia/Kolkata");
+        $date = date('Y-m-d');
+        $dt = date_create($date);
+        $yrmnth = date_format($dt,"F")."-".date_format($dt,'Y');
+		$this->db->insert("user_wallet",["user_id"=>$userId,"extra_notes"=>"User Request to withdraw amount from Admin","withdraw"=>$amt,"tr_date"=>$date,"yearmonth"=>$yrmnth,"status"=>0]);
+		$this->session->set_flashdata("Feed","Request has been sent to admin.");
+		return redirect("Profile/RequestWidthdraw/".$userId);
+	}
 }

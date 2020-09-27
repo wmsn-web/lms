@@ -55,7 +55,7 @@ class AdminModel extends CI_model
 
 	public function getAllMembers()
 	{
-		$this->db->order_by("join_date","ASC");
+		$this->db->order_by("id","ASC");
 		$this->db->where("user_id !=","ESM-202020");
 		$get = $this->db->get("es_users");
 		$result = $get->result();
@@ -112,7 +112,8 @@ class AdminModel extends CI_model
 							"notes" =>$notes,
 							"withdraw" =>$amount,
 							"tr_date"   =>date('d-m-Y H:i:s'),
-							"yearmonth"=>$monthyear
+							"yearmonth"=>$monthyear,
+							"status"	=>1
 
 						);
 			$this->db->insert("user_wallet",$wlletdataSingle);
@@ -148,7 +149,8 @@ class AdminModel extends CI_model
 							"notes" =>$notes,
 							"deposit" =>$prcntSp,
 							"tr_date"   =>date('d-m-Y H:i:s'),
-							"yearmonth"=>$monthyear
+							"yearmonth"=>$monthyear,
+							"status"	=>1
 
 						);
 			$this->db->insert("user_wallet",$wlletdataSingle);
@@ -197,7 +199,8 @@ class AdminModel extends CI_model
 							"notes" =>"Purchased by ".$userId,
 							"deposit" =>$prcnt,
 							"tr_date"   =>date('d-m-Y H:i:s'),
-							"yearmonth"=>$monthyear
+							"yearmonth"=>$monthyear,
+							"status"	=>1
 
 						);
 			$this->db->insert("user_wallet",$wlletdatas);
@@ -366,6 +369,8 @@ function side_check($under_userid,$side){
 		return $data;
 	}
 
+	
+
 	public function checkChangeLevel()
 	{
 		date_default_timezone_set('Asia/Kolkata');
@@ -373,18 +378,28 @@ function side_check($under_userid,$side){
 		$set = $this->db->get("settings")->row();
 		$duration = $set->level_chng_duration;
 		$GT = $this->db->query("SELECT * FROM  es_users where last_update < now() - INTERVAL $duration DAY");
-		$row = $GT->result();
+		if($GT->num_rows()==0)
+		{
 
-		foreach ($row as $key) {
-			$level = $key->level;
-			$nowLvl = $level+1;
-			$users = $key->user_id;
-
-			$mem_type = $key->mem_type;
-			
-			$this->db->query("UPDATE  `es_users` SET `level`='$nowLvl',`last_update`='$date' WHERE `last_update` < now() - INTERVAL $duration DAY AND `mem_type` = 'Package' AND `user_id`='$users'");
-			
 		}
+		else
+		{
+			$row = $GT->result();
+
+			foreach ($row as $key) {
+				$level = $key->level;
+				$nowLvl = $level+1;
+				$users = $key->user_id;
+
+				$mem_type = $key->mem_type;
+				
+				$this->db->query("UPDATE  `es_users` SET `level`='$nowLvl',`last_update`='$date' WHERE `last_update` < now() - INTERVAL $duration DAY AND `mem_type` = 'Package' AND `user_id`='$users'");
+				
+			}
+
+			$this->db->update("settings",["start_date"=>$date]);
+		}
+		
 
 	}
 

@@ -1,4 +1,4 @@
-<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="<?= base_url(); ?>front_assets/img/favicon.ico">
 
     <!-- CSS
 	============================================ -->

@@ -34,16 +34,30 @@
 							<div class="card-header">
 								<h5 class="card-title">Settings</h5>
 							</div>
+							<?php 
+								$set = $this->db->get("settings")->row();
+							?>
 							<div class="card-body">
 								<div class="row">
 									<div class="col-md-3">
 										<form action="<?= base_url('admin_panel/Settings/updateSetup'); ?>" method="post">
-											<?php 
-												$set = $this->db->get("settings")->row();
-											?>
+											<div class="form-group">
+												<label>Change Level Start Date</label>
+												<input type="date" name="dates" class="form-control" value="<?= $set->start_date; ?>" >
+											</div>
 											<div class="form-group">
 												<label>Change Level Duration</label>
 												<input type="number" name="duration" class="form-control" value="<?= $set->level_chng_duration; ?>">
+											</div>
+											<div class="form-group">
+												<button class="btn btn-outline-primary">Save</button>
+											</div>
+										</form>
+										<form action="<?= base_url('admin_panel/Settings/minimum_withdraw'); ?>" method="post">
+											
+											<div class="form-group">
+												<label>Set Minimum Withdraw Amount</label>
+												<input type="text" name="minimum_withdraw" class="form-control" value="<?= $set->minimum_withdraw; ?>">
 											</div>
 											<div class="form-group">
 												<button class="btn btn-outline-primary">Save</button>

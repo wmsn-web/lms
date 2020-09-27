@@ -19,7 +19,7 @@
 	public function index()
 	{
 		$getAllMembers = $this->AdminModel->getAllMembers();
-		$this->load->view("admin/AllMembers",["data"=>$getAllMembers]);
+		$this->load->view("admin/AllMembers",["data"=>$getAllMembers]); 
 
 		//$getAllMembers = $this->AdminModel->getTree();
 		//echo "<pre>";

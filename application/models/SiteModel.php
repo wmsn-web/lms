@@ -174,4 +174,29 @@ class SiteModel extends CI_model
 		$allData = ["mainUser"=>$mainUser,"firstRow"=>$firstRow];
 		return $allData;
 	}
+
+	public function requestData($userId)
+	{
+		$this->db->where(["user_id"=>$userId,"extra_notes!="=>null]);
+		$getrequest = $this->db->get("user_wallet");
+		if($getrequest->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $getrequest->result();
+			foreach ($res as $key) {
+				$data[] = array
+								(
+									"date"	=>$key->tr_date,
+									"notes"	=>$key->extra_notes,
+									"amount"=>$key->withdraw,
+									"status"=>$key->status
+								);
+			}
+		}
+
+		return $data;
+	}
 }

@@ -66,7 +66,7 @@
                                             <span>&#8377; <?= $dashData['walletBalance']; ?>/-</span>
                                         </div>
                                         <h3 class="service-policy-title">Wallet Balance
-                                        <br><small>Request Widthdraw</small></h3>
+                                        <br><small><a href="<?= base_url('Profile/RequestWidthdraw/'.$proData['userId']); ?>">Request Widthdraw</a></small></h3>
                                     </div>
                                   </div>
                                   <div class="col-lg-4 col-md-6 text-center">
