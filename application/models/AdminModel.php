@@ -650,6 +650,32 @@ function side_check($under_userid,$side){
 				$allData = ["data"=>$data,"bal"=>$walletBalance];
 		return $allData;
 	}
+	public function pendingRequest()
+	{
+		$this->db->where(["extra_notes!="=>null, "status"=>0]);
+		$this->db->order_by("id", "ASC");
+		$getRequest = $this->db->get("user_wallet");
+		if($getRequest->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $getRequest->result();
+			foreach ($res as $key) {
+				$data[] = array
+								(
+									"userId"=>$key->user_id,
+									"date"	=>$key->tr_date,
+									"notes"	=>$key->extra_notes,
+									"amount"=>$key->withdraw,
+									"status"=>$key->status,
+									"id"	=>$key->id
+								);
+			}
+		}
 
+		return $data;
+	}
 
 }

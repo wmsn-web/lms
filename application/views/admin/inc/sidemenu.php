@@ -40,14 +40,21 @@
 						</ul>
 					</li>
 					<li class="slide">
-						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-pie-chart"></i><span class="side-menu__label">Charts</span><span class="badge badge-danger side-badge">5</span><i class="angle fe fe-chevron-down"></i></a>
+						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-pie-chart"></i><span class="side-menu__label">Requests</span><i class="angle fe fe-chevron-down"></i></a>
 						<ul class="slide-menu">
-							<li><a class="slide-item" href="chart-morris.html">Morris Charts</a></li>
-							<li><a class="slide-item" href="chart-flot.html">Flot Charts</a></li>
-							<li><a class="slide-item" href="chart-chartjs.html">ChartJS</a></li>
-							<li><a class="slide-item" href="chart-echart.html">Echart</a></li>
-							<li><a class="slide-item" href="chart-sparkline.html">Sparkline</a></li>
-							<li><a class="slide-item" href="chart-peity.html">Chart-peity</a></li>
+							<li><a class="slide-item" href="<?= base_url('admin_panel/WithdrawRequest'); ?>">Withdraw Request</a></li>
+							<li><a class="slide-item" href="<?= base_url('admin_panel/WithdrawRequestCompleted'); ?>">Withdraw Request Completed</a></li>
+							
+						</ul>
+					</li>
+					<li><h3>Products</h3></li>
+					<li class="slide">
+						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-pie-chart"></i><span class="side-menu__label">Products</span><i class="angle fe fe-chevron-down"></i></a>
+						<ul class="slide-menu">
+							<li><a class="slide-item" href="<?= base_url('admin_panel/ProductsCategories'); ?>">Products Categories</a></li>
+							<li><a class="slide-item" href="<?= base_url('admin_panel/AddProducts'); ?>">Add Products</a></li>
+							<li><a class="slide-item" href="<?= base_url('admin_panel/ViewProducts'); ?>">View Products</a></li>
+							
 						</ul>
 					</li>
 					<li><h3>Settings</h3></li>
@@ -55,42 +62,9 @@
 						<a class="side-menu__item"  href="<?= base_url('admin_panel/Settings'); ?>"><i class="side-menu__icon fas fa-cog"></i><span class="side-menu__label">Settings</span></a>
 						
 					</li>
-					<li class="slide">
-						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-shopping-cart-full"></i><span class="side-menu__label">Ecommerce</span><span class="badge badge-success side-badge">3</span><i class="angle fe fe-chevron-down"></i></a>
-						<ul class="slide-menu">
-							<li><a class="slide-item" href="products.html">Products</a></li>
-							<li><a class="slide-item" href="product-details.html">Product-Details</a></li>
-							<li><a class="slide-item" href="product-cart.html">Cart</a></li>
-						</ul>
-					</li>
-					<li class="slide">
-						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-layers-alt"></i><span class="side-menu__label">Utilities</span><i class="angle fe fe-chevron-down"></i></a>
-						<ul class="slide-menu">
-							<li><a class="slide-item" href="background.html">Background</a></li>
-							<li><a class="slide-item" href="border.html">Border</a></li>
-							<li><a class="slide-item" href="display.html">Display</a></li>
-							<li><a class="slide-item" href="flex.html">Flex</a></li>
-							<li><a class="slide-item" href="height.html">Height</a></li>
-							<li><a class="slide-item" href="margin.html">Margin</a></li>
-							<li><a class="slide-item" href="padding.html">Padding</a></li>
-							<li><a class="slide-item" href="position.html">Position</a></li>
-							<li><a class="slide-item" href="width.html">Width</a></li>
-							<li><a class="slide-item" href="extras.html">Extras</a></li>
-						</ul>
-					</li>
-					<li class="slide">
-						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-user"></i><span class="side-menu__label">Custom Pages</span><i class="angle fe fe-chevron-down"></i></a>
-						<ul class="slide-menu">
-							<li><a class="slide-item" href="signin.html">Sign In</a></li>
-							<li><a class="slide-item" href="signup.html">Sign Up</a></li>
-							<li><a class="slide-item" href="forgot.html">Forgot Password</a></li>
-							<li><a class="slide-item" href="reset.html">Reset Password</a></li>
-							<li><a class="slide-item" href="lockscreen.html">Lockscreen</a></li>
-							<li><a class="slide-item" href="underconstruction.html">UnderConstruction</a></li>
-							<li><a class="slide-item" href="404.html">404 Error</a></li>
-							<li><a class="slide-item" href="500.html">500 Error</a></li>
-						</ul>
-					</li>
+					
+					
+					
 				</ul>
 			</div>
 		</aside>

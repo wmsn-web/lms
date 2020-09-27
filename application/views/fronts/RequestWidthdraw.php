@@ -45,7 +45,7 @@
                                       <label>Request Amount</label>
                                       <input type="text" id="amt" name="amt" class="form-control">
                                       <input type="hidden" name="userId" value="<?= $this->uri->segment(3); ?>">
-                                      <span class="d-none" id="mxAmt"><?= $dashData['walletBalance']; ?></span>
+                                      <span class="d-nones" id="mxAmt"><?= $dashData['walletBalance']; ?></span>
                                   </div>
                                   <div class="form-group">
                                       <button disabled="disabled" id="bbnt" class="bnt bnt-primary">Send Request</button>
