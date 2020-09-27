@@ -117,6 +117,8 @@
 										{
 											$slctFree = "selected";
 											$slctPkg = "";
+											$readOnly = "";
+											$disbl = "";
 										}
 										else
 										{
@@ -147,13 +149,30 @@
 								<div class="form-group col-md-12">
 										<h5 class="card-title">Contact Information</h5>
 									</div>
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-4">
 									<label>Mobile Number</label>
 									<input type="text" name="phone" maxlength="10" class="form-control" required="required" value="<?= $data['phone']; ?>" >
 								</div>
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-4">
 									<label>Email Address</label>
 									<input type="email" name="email"  class="form-control" required="required" value="<?= $data['email']; ?>">
+								</div>
+								<div class="form-group col-md-4">
+									<label>Change Level</label>
+									<select name="levels" class="form-control">
+										<?php for ($i=1; $i < 8; $i++) {
+											if($data['level'] == $i)
+											{
+												$lvlSlct = "selected";
+											}
+											else
+											{
+												$lvlSlct="";
+											}
+										 ?>
+											<option <?= $lvlSlct; ?> value="<?= $i; ?>">CL-<?= $i; ?></option>
+										<?php } ?>
+									</select>
 								</div>
 								
 								
@@ -163,19 +182,19 @@
 								</div>
 									<div class="form-group col-md-6">
 										<label>Bank Name</label>
-										<input type="text" name="bank" class="form-control" required="required" value="<?= $data['bank']; ?>">
+										<input type="text" name="bank" class="form-control"  value="<?= $data['bank']; ?>">
 								    </div>
 								    <div class="form-group col-md-6">
 										<label>IFSC Code</label>
-										<input type="text" name="ifsc" class="form-control" required="required" value="<?= $data['ifsc']; ?>">
+										<input type="text" name="ifsc" class="form-control"  value="<?= $data['ifsc']; ?>">
 								    </div>
 								    <div class="form-group col-md-6">
 										<label>Account Number</label>
-										<input type="text" id="ac" name="ac_no" class="form-control" required="required" value="<?= $data['ac_no']; ?>">
+										<input type="text" id="ac" name="ac_no" class="form-control"  value="<?= $data['ac_no']; ?>">
 								    </div>
 								    <div class="form-group col-md-6">
 										<label>Confirm Account Number <small id="msg"></small></label>
-										<input type="text" id="conAc" name="" class="form-control" required="required" value="<?= $data['ac_no']; ?>">
+										<input type="text" id="conAc" name="" class="form-control"  value="<?= $data['ac_no']; ?>">
 								    </div>
 								    <input type="hidden" name="userid" value="<?= $data['userId']; ?>">
 								    <input type="hidden" name="under" value="<?=  $_GET['under']; ?>">

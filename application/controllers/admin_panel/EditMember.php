@@ -2,7 +2,7 @@
 /**
  * 
  */
-class EditMember extends CI_controller
+class EditMember extends CI_controller 
 {
 	function __construct(){
 	parent::__construct();
@@ -59,6 +59,7 @@ class EditMember extends CI_controller
 		$userid = $this->input->post("userid");
 		$memType = $this->input->post("memType");
 		$under_userid = $this->input->post("under");
+		$levels = $this->input->post("levels");
 
 		$es_usersData = array
 							(
@@ -73,6 +74,7 @@ class EditMember extends CI_controller
 								"ifsc"	=>$ifsc,
 							   "ac_no"	=>$ac_no,
 							"mem_type"	=>$memType,
+							"level"		=>$levels
 							);
 		$this->db->where("user_id",$userid);
 		$this->db->update("es_users",$es_usersData);

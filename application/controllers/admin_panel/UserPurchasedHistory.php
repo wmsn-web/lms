@@ -18,7 +18,7 @@ class UserPurchasedHistory extends CI_controller
 
 	public function index()
 	{
-		$getAllTr = $this->AdminModel->getAllTr();
+		$getAllTr = $this->AdminModel->getMtTr();
 		//print_r($getAllTr);
 		$this->load->view("admin/UserPurchasedHistory",["data"=>$getAllTr]);
 	}

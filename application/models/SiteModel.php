@@ -73,7 +73,7 @@ class SiteModel extends CI_model
 		$wallet = $this->db->get("user_wallet");
 		if($wallet->num_rows()==0)
 		{
-			$wlBal = 0;
+			$walletBalance = 0;
 		}
 		else
 		{
@@ -112,6 +112,7 @@ class SiteModel extends CI_model
 			$mainUser = array("name"=>$rrow->name,"usrId"=>$rrow->user_id);
 		}
 		$this->db->where(["under_userid"=>$userId]);
+		$this->db->order_by("id","ASC");
 		$gt = $this->db->get("es_users");
 		if($gt->num_rows()==0)
 		{

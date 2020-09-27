@@ -64,24 +64,29 @@
 												<tr>
 													<td><?= $s; ?></td>
 													<td><?= $key['mnUser']; ?><br>
+														<?= $key['mnName']; ?><br>
 														<b>Total Amount:</b><i><?= $key['totAmt']; ?></i>
 													</td>
 													<td>
-														<table class="table table-bordered">
-															<tr class="bg-dark text-white">
-																<th>Name</th>
-																<th>Notes</th>
-																<th>Amount</th>
-																<th>Date</th>
-															</tr>
-															<?php foreach ($key['trData'] as $keyTr): ?>
-																<tr>
-																	<td><?= $keyTr['name']; ?></td>
-																	<td><?= $keyTr['notice']; ?></td>
-																	<td><?= $keyTr['amount']; ?></td>
-																	<td><?= $keyTr['date']; ?></td>
+														<table id="" class="table table-bordered example2">
+															<thead>
+																<tr class="bg-dark text-white">
+																	<th>Name</th>
+																	<th>Notes</th>
+																	<th>Amount</th>
+																	<th>Date</th>
 																</tr>
-															<?php endforeach; ?>
+															</thead>
+															<tbody>
+																<?php foreach ($key['trData'] as $keyTr): ?>
+																	<tr>
+																		<td><?= $keyTr['name']; ?></td>
+																		<td><?= $keyTr['notice']; ?></td>
+																		<td><?= $keyTr['amount']; ?></td>
+																		<td><?= $keyTr['date']; ?></td>
+																	</tr>
+																<?php endforeach; ?>
+															</tbody>
 														</table>
 													</td>
 													

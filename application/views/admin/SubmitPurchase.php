@@ -31,17 +31,18 @@
 				<div class="row justify-content-center">
 					<div class="col-md-8">
 						<div class="card">
-							<div class="card-header bg-primary text-center">
+							<div class="card-header text-center bg-dark">
 								<h5 class="card-title text-white">
 									Submit Details
 								</h5>
 							</div>
 							<div class="card-body">
+								<div id="cash">
 								<form action="<?= base_url('admin_panel/SubmitPurchase/addPurchase'); ?>" method="post">
 									<div class="row">
 										<div class="form-group col-sm-6">
 											<label>Customer (<small class="text-danger">Search By Name or ID</small>)</label>
-											<input type="text" name="userid" class="form-control" id="usr" autocomplete="off">
+											<input type="text" name="userid" class="form-control" id="usr" autocomplete="off" required="required">
 										<small class="text-danger" id="msg"></small>
 										<div class="srcRes">
 											<ul id="usrData"></ul>
@@ -49,17 +50,29 @@
 										</div>
 										<div class="form-group col-sm-6">
 											<label>Amount</label>
-											<input type="text" name="amount" class="form-control">
+											<input type="text" name="amount" id="amt" class="form-control" required="required">
+										</div>
+										<div class="form-group col-sm-6">
+											<input type="checkbox" name="getWl" id="getWl" value="yes">
+											<label for="getWl">Get Amount from Wallet</label>
+										</div>
+										<div class="form-group col-sm-6">
+											<h5 id="wlBal"></h5>
+											<span style="display: none" id="hideSpan"></span>
 										</div>
 										<div class="form-group col-sm-12">
 											<label>Notes</label>
-											<input type="text" name="notes" class="form-control">
+											<input type="text" name="notes" class="form-control" required="required">
+											<input type="hidden" name="purchase_id" value="ORD-<?= mt_rand(00000000,99999999); ?>">
 										</div>
 										<div class="form-group col-sm-12">
-											<button class="btn btn-primary">Submit</button>
+											<button type="submit" class="btn btn-primary">Submit Cash</button>
+											
 										</div>
 									</div>
 								</form>
+								</div>
+								
 								
 							</div>
 						</div>
@@ -111,6 +124,28 @@
 						}
 						)
 				});
+
+				$("#getWl").change(function(){
+					if ($('input#getWl').is(':checked')) 
+					{
+						var amt = $("#hideSpan").html();
+						if(amt == "")
+						{
+							alert("Please Select User first.");
+							$('input#getWl').attr("checked",false);
+						}
+						else
+						{
+							$("#amt").val(amt);
+							$("#amt").attr("readonly",true);
+						}
+					}
+					else
+					{
+						$("#amt").val("");
+						$("#amt").attr("readonly",false);
+					}
+				});
 			});
 
 			function getText(val)
@@ -118,6 +153,18 @@
 			$("#usr").val(val);
 			$(".srcRes").hide();
 			$("#bnt").attr("disabled",false);
+			var userId = val;
+			$.post("<?= base_url('admin_panel/SubmitPurchase/getWallet'); ?>",
+						{
+							userId: userId
+						},
+						function(response,status)
+						{
+							$("#wlBal").html("Wallet Balance: &#8377;"+response);
+							$("#hideSpan").html(response);
+						}
+
+				)
 		}
 			
 		</script>

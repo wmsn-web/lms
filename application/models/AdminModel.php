@@ -99,7 +99,27 @@ class AdminModel extends CI_model
 		return $data;
 	}
 
-	public function submitBalance($userid,$amount,$notes)
+	public function purchaseFromwallet($userid,$amount,$notes,$purchase_id)
+	{
+		date_default_timezone_set('Asia/Kolkata');
+			$date = date('Y-m-d');
+			$dt = date_create($date);
+			$monthyear = date_format($dt,"F")."-".date_format($dt,"Y");
+			$wlletdataSingle = array
+						(
+							"user_id"=>$userid,
+							"purchase_id"=>$purchase_id,
+							"notes" =>$notes,
+							"withdraw" =>$amount,
+							"tr_date"   =>date('d-m-Y H:i:s'),
+							"yearmonth"=>$monthyear
+
+						);
+			$this->db->insert("user_wallet",$wlletdataSingle);
+
+	}
+
+	public function submitBalance($userid,$amount,$notes,$purchase_id)
 	{
 		$this->db->where("user_id",$userid);
 		$get = $this->db->get("es_users");
@@ -124,6 +144,7 @@ class AdminModel extends CI_model
 			$wlletdataSingle = array
 						(
 							"user_id"=>$userId,
+							"purchase_id"=>$purchase_id,
 							"notes" =>$notes,
 							"deposit" =>$prcntSp,
 							"tr_date"   =>date('d-m-Y H:i:s'),
@@ -150,6 +171,7 @@ class AdminModel extends CI_model
 			$datas = array
 						(
 							"user_id"=>$temp_under_userid,
+							"purchase_id"=>$purchase_id,
 							"notice" =>"Purchased by ".$userId,
 							"amount" =>$amount,
 							"date"   =>date('d-m-Y H:i:s'),
@@ -171,6 +193,7 @@ class AdminModel extends CI_model
 			$wlletdatas = array
 						(
 							"user_id"=>$temp_under_userid,
+							"purchase_id"=>$purchase_id,
 							"notes" =>"Purchased by ".$userId,
 							"deposit" =>$prcnt,
 							"tr_date"   =>date('d-m-Y H:i:s'),
@@ -182,6 +205,7 @@ class AdminModel extends CI_model
 			$allTempUser[] = array
 									(
 										"userid"=>$temp_under_userid,
+										"purchase_id"=>$purchase_id,
 										"deposit" =>$prcnt,
 										"tr_date"   =>date('d-m-Y H:i:s'),
 										"amount" =>$amount
@@ -205,6 +229,7 @@ class AdminModel extends CI_model
 		$datas2 = array
 						(
 							"user_id"=>$userId,
+							"purchase_id"=>$purchase_id,
 							"notice" =>$notes,
 							"amount" =>$amount,
 							"date"   =>date('d-m-Y H:i:s'),
@@ -363,6 +388,38 @@ function side_check($under_userid,$side){
 
 	}
 
+	public function getMtTr()
+	{
+		$this->db->where("user_id!=","ESM-202020");
+		$this->db->order_by("id","ASC");
+		$gttr = $this->db->get("my_transaction");
+		if($gttr->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $gttr->result();
+			foreach ($res as $key) {
+				$this->db->where("user_id",$key->user_id);
+				$gtUsr = $this->db->get("es_users")->row();
+
+				$data[] = array
+							(
+								"date"	=>$key->date,
+								"userid"=>$key->user_id,
+								"name"	=>$gtUsr->name,
+								"notes"	=>$key->notice,
+								"amount"=>$key->amount,
+								"yearmonth"=>$key->yearmonth
+							);
+			}
+		}
+
+		return $data;
+	}
+	
+
 	public function getAllTr()
 	{
 		$this->db->where("user_id!=","ESM-202020");
@@ -458,6 +515,11 @@ function side_check($under_userid,$side){
 				$this->db->order_by("id","ASC");
 				$myTr = $this->db->get("my_transaction");
 
+				$this->db->where(["user_id"=>$expl[2]]);
+				$user = $this->db->get("es_users")->row();
+
+				$name = @$user->name;
+
 				$this->db->where(["user_id"=>$expl[2],"yearmonth"=>$dates]);
 				$this->db->select_sum("amount");
 				$gtSum = $this->db->get("my_transaction")->row();
@@ -483,7 +545,7 @@ function side_check($under_userid,$side){
 										);
 					endforeach;	
 				}
-				$data[] = array("mnUser"=>$expl[2],"totAmt"=>$gtSum->amount,"trData"=>$trData);
+				$data[] = array("mnUser"=>$expl[2],"mnName"=>$name,"totAmt"=>$gtSum->amount,"trData"=>$trData);
 			}
 		}
 
@@ -573,4 +635,6 @@ function side_check($under_userid,$side){
 				$allData = ["data"=>$data,"bal"=>$walletBalance];
 		return $allData;
 	}
+
+
 }
