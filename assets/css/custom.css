@@ -383,6 +383,23 @@ input:checked + .slider:before {
 {
 	float: right;
 }
+.tbl
+{
+	width: 100%;
+	border-collapse: collapse;
+}
+.tbl th
+{
+	text-align: left;
+	border:solid 1px #ccc;
+	padding: 6px;
+}
+.tbl td
+{
+	text-align: right;
+	border:solid 1px #ccc;
+	padding: 6px;
+}
 
 
 

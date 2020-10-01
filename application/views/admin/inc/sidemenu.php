@@ -24,6 +24,8 @@
 						<ul class="slide-menu">
 							<li><a class="slide-item" href="<?= base_url('admin_panel/AddMember'); ?>">Add Member</a></li>
 							<li><a class="slide-item" href="<?= base_url('admin_panel/AllMembers'); ?>">View All Members</a></li>
+							<li><a class="slide-item" href="<?= base_url('admin_panel/ExecutiveMembers'); ?>">Executive Members</a></li>
+							<li><a class="slide-item" href="<?= base_url('admin_panel/MembersTree'); ?>">Members Tree</a></li>
 						</ul>
 					</li>
 					
@@ -36,6 +38,7 @@
 							<li><a class="slide-item" href="<?= base_url('admin_panel/UserPurchasedHistory'); ?>">All User Purchased History</a></li>
 							<li><a class="slide-item" href="<?= base_url('admin_panel/BusinessReport'); ?>">Business Report</a></li>
 							<li><a class="slide-item" href="<?= base_url('admin_panel/UserWallet'); ?>">User Wallet</a></li>
+							<li><a class="slide-item" href="<?= base_url('admin_panel/CompanyBusiness'); ?>">Company Business</a></li>
 							
 						</ul>
 					</li>

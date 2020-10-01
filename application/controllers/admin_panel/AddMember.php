@@ -18,7 +18,7 @@ class AddMember extends CI_controller
 
 	public function index()
 	{
-		if(isset($_GET['under']))
+		if(isset($_GET['under'])) 
 		{
 			$under = $_GET['under'];
 			$get = $this->AdminModel->getUnders($under);
@@ -55,6 +55,7 @@ class AddMember extends CI_controller
 		$userid = $this->input->post("userid");
 		$memType = $this->input->post("memType");
 		$under_userid = $this->input->post("under");
+		$levels = $this->input->post("levels");
 		$account = "4471";
 		$password = password_hash("123456", PASSWORD_DEFAULT);
 		$capping = 500;
@@ -112,7 +113,7 @@ class AddMember extends CI_controller
 							   "ac_no"	=>$ac_no,
 							"password"	=>$password,
 							"mem_type"	=>$memType,
-							"level"		=>1,
+							"level"		=>$levels,
 							"last_update"=>$start_date,
 						   "join_date"	=>$joinDate
 							);

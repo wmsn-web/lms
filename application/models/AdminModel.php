@@ -388,12 +388,19 @@ function side_check($under_userid,$side){
 
 			foreach ($row as $key) {
 				$level = $key->level;
-				$nowLvl = $level+1;
-				$users = $key->user_id;
+				if($level > 7)
+				{
+					//Nothing
+				}
+				else
+				{
+					$nowLvl = $level+1;
+					$users = $key->user_id;
 
-				$mem_type = $key->mem_type;
-				
-				$this->db->query("UPDATE  `es_users` SET `level`='$nowLvl',`last_update`='$date' WHERE `last_update` < now() - INTERVAL $duration DAY AND `mem_type` = 'Package' AND `user_id`='$users'");
+					$mem_type = $key->mem_type;
+					
+					$this->db->query("UPDATE  `es_users` SET `level`='$nowLvl',`last_update`='$date' WHERE `last_update` < now() - INTERVAL $duration DAY AND `mem_type` = 'Package' AND `user_id`='$users'");
+				}
 				
 			}
 
@@ -673,6 +680,64 @@ function side_check($under_userid,$side){
 									"id"	=>$key->id
 								);
 			}
+		}
+
+		return $data;
+	}
+
+	public function getExecutiveMembers()
+	{
+		$this->db->where(["user_id!="=>"ESM-202020","level"=>8]);
+		$this->db->order_by("id","ASC");
+		$getex = $this->db->get("es_users");
+		if($getex->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $getex->result();
+			foreach ($res as $key) {
+				$data[] = array
+								(
+									"name"	=>$key->name,
+									"userId"=>$key->user_id,
+									"email"	=>$key->email,
+									"level"	=>$key->level,
+									"phone"	=>$key->phone,
+									"exStatus"=>$key->ex_status
+								);
+			}
+		}
+
+		return $data;
+	}
+
+
+	public function getCompanyBusiness($yrMnth)
+	{
+		$this->db->where("yearmonth",$yrMnth);
+		$this->db->select_sum("amount");
+		$get = $this->db->get("my_transaction");
+		if($get->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$row = $get->row();
+			$this->db->where(["level"=>8,"ex_status"=>0]);
+			$getExs = $this->db->get("es_users");
+			$rowEx = $getExs->row();
+			$getEx = $getExs->num_rows();
+			$eachAmt = $row->amount/$getEx;
+			$data = array
+						(
+							"month"	=>$yrMnth,
+							"amount"=>$row->amount,
+							"getEx" =>$getEx,
+							"eachAmt"=>$eachAmt
+						);
 		}
 
 		return $data;

@@ -60,6 +60,7 @@ class BusinessReport extends CI_controller
 					$this->db->where(["user_id"=>$value->userid,"yearmonth"=>$yrmnth]);
 					$this->db->update("business_report_history",["amount"=>$nowAmt]);
 					$return = "exist";
+					$this->db->update("tree",["tot_amount"=>"0.00"]);
 				}
 				else
 				{

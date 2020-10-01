@@ -42,6 +42,10 @@ class SiteModel extends CI_model
 
 	public function dashBoardData($userId)
 	{
+		date_default_timezone_set("Asia/Kolkata");
+        $date = date('Y-m-d');
+        $dt = date_create($date);
+        $yrmnth = date_format($dt,"F")."-".date_format($dt,'Y');
 		
 		//Get Downline Count
 		$this->db->where("userid",$userId);
@@ -65,7 +69,11 @@ class SiteModel extends CI_model
 			$ninthcount = $trRow->ninthcount;
 			$tenthcount = $trRow->tenthcount;
 			$total = $leftcount+$rightcount+$threecount+$fourthcount+$fifthcount+$sixthcount+$seventhcount+$eighthcount+$ninthcount+$tenthcount;
-			$business = $trRow->tot_amount;
+			$this->db->where(["user_id"=>$userId,"yearmonth"=>$yrmnth]);
+			$this->db->select_sum("amount");
+			$btBs = $this->db->get("business_report_history");
+			$bsRow = $btBs->row();
+			$business = $bsRow->amount;
 		}
 
 		$this->db->where("user_id",$userId);
@@ -105,11 +113,24 @@ class SiteModel extends CI_model
 		{
 			$allData = array();
 			$mainUser = array();
+			$upperUser = array(); 
 		}
 		else
 		{
 			$rrow = $gt0->row();
 			$mainUser = array("name"=>$rrow->name,"usrId"=>$rrow->user_id);
+			$this->db->where("user_id",$rrow->under_userid);
+			$getUpper = $this->db->get("es_users");
+			if($getUpper->num_rows()==0)
+			{
+				$upperUser = array();
+			}
+			else
+			{
+				$uprUser = $getUpper->row();
+				$upperUser = array("name"=>@$uprUser->name,"usrId"=>@$uprUser->user_id);
+			}
+			
 		}
 		$this->db->where(["under_userid"=>$userId]);
 		$this->db->order_by("id","ASC");
@@ -171,7 +192,7 @@ class SiteModel extends CI_model
 			}
 		}
 
-		$allData = ["mainUser"=>$mainUser,"firstRow"=>$firstRow];
+		$allData = ["mainUser"=>$mainUser,"upperUser"=>$upperUser,"firstRow"=>$firstRow];
 		return $allData;
 	}
 
@@ -193,6 +214,32 @@ class SiteModel extends CI_model
 									"notes"	=>$key->extra_notes,
 									"amount"=>$key->withdraw,
 									"status"=>$key->status
+								);
+			}
+		}
+
+		return $data;
+	}
+
+	public function getMytr($userId)
+	{
+		$this->db->where("user_id",$userId);
+		$this->db->order_by("id","DESC");
+		$gettr = $this->db->get("my_transaction");
+		if($gettr->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $gettr->result();
+			foreach ($res as $key) {
+				$data[] = array
+								(
+									"notes"=>$key->notice,
+									"amount"=>$key->amount,
+									"date"	=>$key->date,
+									"yearmonth"=>$key->yearmonth
 								);
 			}
 		}

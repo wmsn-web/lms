@@ -54,14 +54,14 @@
 											<?php if(!empty($data)){ ?>
 												<?php $s = 1;
 												 foreach($data as $key) { $sl = $s++; ?>
-													<tr>
+													<tr id="ttr_<?= $sl; ?>">
 														<td><?= $sl; ?></td>
 														<td><?= $key['date']; ?></td>
 														<td><?= $key['userId']; ?></td>
 														<td><?= $key['notes']; ?></td>
 														<td>&#8377;<?= number_format($key['amount'],2); ?></td>
-														<td><button class="btn btn-success">Accept</button>
-															<button class="btn btn-danger">Cancel</button></td>
+														<td><button id="ac_<?= $key['id']; ?>_<?= $sl; ?>" class="btn btn-success accept">Accept</button>
+															<button id="cn_<?= $key['id']; ?>_<?= $sl; ?>" class="btn btn-danger cancel">Cancel</button></td>
 														
 													</tr>
 											    <?php } ?>
@@ -90,5 +90,63 @@
 		<?php include("inc/rightmenu.php"); ?>
 		<?php include("inc/footer.php"); ?>
 		<?php include("inc/table_js.php"); ?>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$(".accept").click(function(){
+					permisn =  confirm('Confirm this request?');
+					if(permisn == true)
+					{
+						var ids = this.id;
+						spl = ids.split("_");
+						id = spl[1];
+						trId = "ttr_"+spl[2];
+						$.post("<?= base_url('admin_panel/WithdrawRequest/acceptRequest'); ?>",
+								{
+									id: id
+								},
+								function(response,status)
+								{
+									alert("Request Accepted");
+									location.href="<?= base_url('admin_panel/WithdrawRequest/'); ?>";
+								}
+						)
+					}
+					else
+					{
+						
+						alert("Request Accepted");
+						location.href="<?= base_url('admin_panel/WithdrawRequest/'); ?>";
+					}
+				});
+
+				//If Cancel
+				$(".cancel").click(function(){
+					permisn =  confirm('Are you Confirm delete this request?');
+					if(permisn == true)
+					{
+						var ids = this.id;
+						spl = ids.split("_");
+						id = spl[1];
+						trId = "ttr_"+spl[2];
+						$.post("<?= base_url('admin_panel/WithdrawRequest/deleteRequest'); ?>",
+								{
+									id: id
+								},
+								function(response,status)
+								{
+									alert("Request Deleted");
+									location.href="<?= base_url('admin_panel/WithdrawRequest/'); ?>";
+								}
+						)
+					}
+					else
+					{
+						
+						alert("Request Deleted");
+						location.href="<?= base_url('admin_panel/WithdrawRequest/'); ?>";
+					}
+				});
+			});
+		</script>
 	</body>
 </html>

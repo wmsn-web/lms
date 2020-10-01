@@ -69,7 +69,7 @@
                                         <br><small><a href="<?= base_url('Profile/RequestWidthdraw/'.$proData['userId']); ?>">Request Widthdraw</a></small></h3>
                                     </div>
                                   </div>
-                                  <div class="col-lg-4 col-md-6 text-center">
+                                  <div onclick="location.href='<?= base_url('Profile/MyBusiness'); ?>'" class="col-lg-4 col-md-6 text-center">
                                     <div class="service-policy-item cp mt-30">
                                         <div class="service-policy-icon">
                                             <span>&#8377; <?= $dashData['business']; ?>/-</span>

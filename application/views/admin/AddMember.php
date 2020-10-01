@@ -25,7 +25,7 @@
 					</div>
 					
 				</div>
-				<!-- breadcrumb -->
+				<!-- breadcrumb --> 
 
 
 				<!-- row -->
@@ -93,13 +93,21 @@
 								<div class="form-group col-md-12">
 										<h5 class="card-title">Contact Information</h5>
 									</div>
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-4">
 									<label>Mobile Number</label>
 									<input type="text" name="phone" maxlength="10" class="form-control" required="required">
 								</div>
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-4">
 									<label>Email Address</label>
 									<input type="email" name="email"  class="form-control" required="required">
+								</div>
+								<div class="form-group col-md-4">
+									<label>Change Level</label>
+									<select name="levels" class="form-control">
+										<?php for ($i=1; $i < 8; $i++) { ?>
+											<option  value="<?= $i; ?>">CL-<?= $i; ?></option>
+										<?php } ?>
+									</select>
 								</div>
 								
 								<div class="form-group col-md-12">

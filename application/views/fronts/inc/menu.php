@@ -68,8 +68,8 @@
                                         <li><a href="#">My Account</a>
                                             <ul class="dropdown">
                                                 <li><a href="<?= base_url('Profile'); ?>">Profile</a></li>
-                                                <li><a href="<?= base_url('MyBusiness'); ?>">My Business</a></li>
-                                                <li><a href="<?= base_url('MyTransaction'); ?>">My transaction</a></li>
+                                                <li><a href="<?= base_url('Profile/MyBusiness'); ?>">My Business</a></li>
+                                                <li><a href="<?= base_url('Profile/MyTransaction'); ?>">My transaction</a></li>
                                                 <li><a href="<?= base_url('Home/logout'); ?>">Logout</a></li>
                                             </ul>
                                         </li>

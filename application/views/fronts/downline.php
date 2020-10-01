@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Profile | Samridhi - Apna Samridhi</title>
+    <title>Downline | Samridhi - Apna Samridhi</title>
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -31,6 +31,8 @@
                         <h2>Customer Tree View</h2>
                           <div class="tree">
                             <ul>
+                              <li><a href="<?= base_url('Profile/Downline/'.@$treeData['upperUser']['usrId']); ?>"><?= @$treeData['upperUser']['name']; ?></a>
+                            <ul>
                               <li>
                                 <a href="#">
                                   <i class="fa fa-user"></i><br>
@@ -40,8 +42,8 @@
                                     <?php foreach ($treeData['firstRow'] as $key1) { ?>
                                     
                                     <li>
-                                      <a href="<?= base_url('Profile/Downline/'.$key1['usrId']); ?>"><i class="fa fa-user"></i><br><?= $key1['name']; ?></a>
-                                      <ul>
+                                      <a href="<?= base_url('Profile/Downline/'.$key1['usrId']); ?>"><i class="fa fa-user"></i><br><?= substr($key1['name'],0,5); ?></a>
+                                      <ul class="extraSmall">
                                         <?php if(!empty($key1['secRow'])): ?>
                                           <?php foreach ($key1['secRow'] as $key2) { ?>
                                             <li>
@@ -58,6 +60,8 @@
                                 </ul>
                               </li>
                             </ul>
+                          </li>
+                        </ul>
                           </div>
                       </div>
                     </div>

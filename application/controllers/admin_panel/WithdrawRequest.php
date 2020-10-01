@@ -21,4 +21,22 @@
 		$pendingRequest = $this->AdminModel->pendingRequest();
 		$this->load->view("admin/WithdrawRequest",["data"=>$pendingRequest]);
 	}
+
+	public function acceptRequest()
+	{
+		$id = $this->input->post("id");
+		$this->db->where("id",$id);
+		$this->db->update("user_wallet",["status"=>1]);
+		echo "done";
+
+	}
+
+	public function deleteRequest()
+	{
+		$id = $this->input->post("id");
+		$this->db->where("id",$id);
+		$this->db->delete("user_wallet");
+		echo "done";
+
+	}
 }

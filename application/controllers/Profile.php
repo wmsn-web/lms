@@ -91,4 +91,11 @@ class Profile extends CI_controller
 		$this->session->set_flashdata("Feed","Request has been sent to admin.");
 		return redirect("Profile/RequestWidthdraw/".$userId);
 	}
+
+	public function MyBusiness()
+	{
+		$userId = $this->session->userdata("userId");
+		$getMytr = $this->SiteModel->getMytr($userId);
+		$this->load->view("fronts/MyBusiness",["mytr"=>$getMytr]);
+	}
 }
