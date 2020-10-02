@@ -743,4 +743,219 @@ function side_check($under_userid,$side){
 		return $data;
 	}
 
+	public function CompTree($userId)
+	{
+		$this->db->where(["user_id"=>$userId]);
+		$gt0 = $this->db->get("es_users");
+		if($gt0->num_rows()==0)
+		{
+			$allData = array();
+			$mainUser = array();
+			$upperUser = array(); 
+		}
+		else
+		{
+			$rrow = $gt0->row();
+			$mainUser = array("name"=>$rrow->name,"usrId"=>$rrow->user_id);
+			$this->db->where("user_id",$rrow->under_userid);
+			$getUpper = $this->db->get("es_users");
+			if($getUpper->num_rows()==0)
+			{
+				$upperUser = array();
+			}
+			else
+			{
+				$uprUser = $getUpper->row();
+				$upperUser = array("name"=>@$uprUser->name,"usrId"=>@$uprUser->user_id);
+			}
+			
+		}
+		$this->db->where(["under_userid"=>$userId]);
+		$this->db->order_by("id","ASC");
+		$gt = $this->db->get("es_users");
+		if($gt->num_rows()==0)
+		{
+			$firstRow = array();
+		}
+		else
+		{
+			$first = $gt->result();
+			foreach($first as $fr)
+			{
+				$this->db->where("under_userid",$fr->user_id);
+				$gt2 = $this->db->get("es_users");
+				if($gt2->num_rows()==0)
+				{
+					$SecRow = array();
+				}
+				else
+				{
+					$second = $gt2->result();
+					$SecRow = [];
+					foreach ($second as $sec) {
+						$this->db->where("under_userid",$sec->user_id);
+						$gt3 = $this->db->get("es_users");
+						if($gt3->num_rows()==0)
+						{
+							$ThrdRow = array();
+						}
+						else
+						{
+							$ThrdRowss = $gt3->result();
+							$ThrdRow = [];
+							foreach ($ThrdRowss as $th) {
+								$ThrdRow[] = array
+													(
+														"name"=>$th->name,
+														"usrId"=>$th->user_id
+													);
+							}
+						}
+						$SecRow[] = array
+										(
+											"name"=>$sec->name,
+											"usrId"=>$sec->user_id,
+											"thrdRow"=>$ThrdRow
+										);
+					}
+				}
+				$firstRow[] = array
+									(
+										"name" => $fr->name,
+										"usrId"=>$fr->user_id,
+										"secRow"=>$SecRow,
+										
+										
+									);
+			}
+		}
+
+		$allData = ["mainUser"=>$mainUser,"firstRow"=>$firstRow];
+		return $allData;
+	}
+
+	public function CompleteRequest()
+	{
+		$this->db->where(["extra_notes!="=>null, "status"=>1]);
+		$this->db->order_by("id", "ASC");
+		$getRequest = $this->db->get("user_wallet");
+		if($getRequest->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $getRequest->result();
+			foreach ($res as $key) {
+				$data[] = array
+								(
+									"userId"=>$key->user_id,
+									"date"	=>$key->tr_date,
+									"notes"	=>$key->extra_notes,
+									"amount"=>$key->withdraw,
+									"status"=>$key->status,
+									"id"	=>$key->id
+								);
+			}
+		}
+
+		return $data;
+	}
+
+	public function getAllCat()
+	{
+		$this->db->order_by("id","DESC");
+		$allCat = $this->db->get("categories");
+		if($allCat->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $allCat->result();
+			foreach ($res as $key) {
+				$data[] = array
+							(
+								"cat_name"=>$key->cat_name,
+								"img"=>$key->cat_img,
+								"id"=>$key->id
+							);
+			}
+		}
+
+		return $data;
+	}
+
+	public function getCatById($id)
+	{
+		$this->db->where("id",$id);
+		$allCat = $this->db->get("categories");
+		if($allCat->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$key = $allCat->row();
+			$data = array
+							(
+								"cat_name"=>$key->cat_name,
+								"img"=>$key->cat_img,
+								"id"=>$key->id
+							);
+		}
+
+		return $data;
+	}
+
+	public function getAllProducts()
+	{
+		$this->db->order_by("id","DESC");
+		$getPro = $this->db->get("products");
+		if($getPro->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $getPro->result();
+			foreach ($res as $key) {
+				$this->db->where("id",$key->id);
+				$Cat = $this->db->get("categories")->row();
+				$data[] = array
+							(
+								"cat_name" => $Cat->cat_name,
+								"pro_name" =>$key->pro_name,
+								"img"	=>$key->pro_img,
+								"id"	=>$key->id
+							);
+			}
+		}
+
+		return $data;
+	}
+
+	public function getProById($id)
+	{
+		$this->db->where("id",$id);
+		$getPro = $this->db->get("products");
+		if($getPro->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$key = $getPro->row();
+			$data = array
+							(
+								"pro_name" =>$key->pro_name,
+								"img"	=>$key->pro_img,
+								"id"	=>$key->id,
+								"cat_id"=>$key->cat_id
+							);
+		}
+
+		return $data;
+	}
+
 }
