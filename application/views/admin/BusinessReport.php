@@ -71,20 +71,7 @@
 								<button id="fltr" class="btn btn-warning"><i class="fa fa-filter text-white"></i></button>
 								<div class="table-responsive">
 									<div id="tblJs">
-										<span id="prc" class="right singlePrice">
-												<table class="table table-bordered">
-													<tr>
-														<th>Business =</th>
-														<td><?= $report['totBusiness']; ?></td>
-													</tr>
-													<tr>
-														<th>Others =</th>
-														<td><?= number_format($report['othrBs'],2); ?></td>
-													</tr>
-												</table>
-												Total Business
-												<?= $report['totTr']; ?>
-											</span><br><br>
+										
 									<table id="example2" class="table table-bordered">
 										<thead>
 											<tr>
