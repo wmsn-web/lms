@@ -57,13 +57,23 @@ class AddMember extends CI_controller
 		$under_userid = $this->input->post("under");
 		$levels = $this->input->post("levels");
 		$account = "4471";
-		$password = password_hash("123456", PASSWORD_DEFAULT);
+		$fixdPass = "123456";
+		$password = password_hash($fixdPass, PASSWORD_DEFAULT);
 		$capping = 500;
 		date_default_timezone_set('Asia/Kolkata');
 		$joinDate = date('Y-m-d');
 		$set = $this->db->get("settings")->row();
 		$duration = $set->level_chng_duration;
 		$start_date = $set->start_date;
+		$updtBys = $this->session->userdata("AdminUsers");
+		if($updtBys =="admin")
+		{
+			$updtBy = null;
+		}
+		else
+		{
+			$updtBy = $updtBys;
+		}
 
 		if($this->checkUserId($userid))
 		{
@@ -115,13 +125,29 @@ class AddMember extends CI_controller
 							"mem_type"	=>$memType,
 							"level"		=>$levels,
 							"last_update"=>$start_date,
-						   "join_date"	=>$joinDate
+						   "join_date"	=>$joinDate,
+						   "update_by"	=>$updtBy
 							);
 		$this->db->insert("es_users",$es_usersData);
 		$this->db->insert("tree",["userid"=>$userid]);
 
 		$this->db->where("userid",$under_userid);
 		$this->db->update("tree",[$side=>$userid]);
+
+		//Send Sms//
+		//Get SMS Credentials//
+		$sms = $this->db->get("sms_set")->row();
+		$smsUser= $sms->sms_user;
+		$smsPass = $sms->sms_pass;
+		$number=$phone;
+		$sender= $sms->sender;
+		$message = "Dear ".$name.", Thanks for join with us. Your UserID is: ".$userid." and Password is: ".$fixdPass." Please Don't share your UserID & Password.";
+
+		$url="login.bulksmsgateway.in/sendmessage.php?user=".urlencode($smsUser)."&password=".urlencode($smsPass)."&mobile=".urlencode($number)."&sender=".urlencode($sender)."&message=".urlencode($message)."&type=".urlencode('3'); 
+			$ch = curl_init($url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			echo $curl_scraped_page = curl_exec($ch);
+			curl_close($ch); 
 
 		$temp_under_userid = $under_userid;
 		$temp_side_count = $side.'count'; //leftcount or rightcount
@@ -157,7 +183,7 @@ class AddMember extends CI_controller
 			}
 		}
 
-		$this->session->set_flashdata("Feed","Member Added Successfully..");
+		$this->session->set_flashdata("Feed","Member Added Successfully..<b style='color:#090'>ID:".$userid." </b>");
 		return redirect("admin_panel/AddMember/");
 	}
 

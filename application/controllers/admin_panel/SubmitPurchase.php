@@ -69,12 +69,21 @@ class SubmitPurchase extends CI_controller
 		$notes = $this->input->post("notes");
 		$purchase_id = $this->input->post("purchase_id");
 		$getWl = $this->input->post("getWl");
+		$updtBys = $this->session->userdata("AdminUsers");
+		if($updtBys =="admin")
+		{
+			$updtBy = null;
+		}
+		else
+		{
+			$updtBy = $updtBys;
+		}
 		if($getWl == "yes")
 		{
-			$this->AdminModel->purchaseFromwallet($userid,$amount,$notes,$purchase_id);
+			$this->AdminModel->purchaseFromwallet($userid,$amount,$notes,$purchase_id,$updtBy);
 		}
 
-		$submitBalance = $this->AdminModel->submitBalance($userid,$amount,$notes,$purchase_id);
+		$submitBalance = $this->AdminModel->submitBalance($userid,$amount,$notes,$purchase_id,$updtBy);
 
 				$this->db->where("user_id",$userid);
 				$this->db->select_sum("deposit");

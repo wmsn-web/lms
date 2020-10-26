@@ -20,11 +20,11 @@ class Login extends CI_controller
 		$user = $this->input->post("user");
 		$pass = $this->input->post("pass");
 
-		$this->db->where("admin_user",$user);
+		$this->db->where(["admin_user"=>$user,"status"=>1]);
 		$getUser = $this->db->get("admin");
 		$num = $getUser->num_rows();
 		$row = $getUser->row();
-		$pawd = $row->password;//taken from database
+		$pawd = @$row->password;//taken from database
 		if($num ==0)
 		{
 			$this->session->set_flashdata("Feed","Invalid Username!");

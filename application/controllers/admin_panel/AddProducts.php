@@ -14,22 +14,33 @@ class AddProducts extends CI_controller
 			$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 			return redirect("admin_panel/Login?refer=$actual_link");
 		}
+		
 	}
 
 	public function index($id='')
 	{
-		if(!empty($id))
-		{
-			$getAllCat = $this->AdminModel->getAllCat();
-			$getAllProducts = $this->AdminModel->getAllProducts();
-			$getProById = $this->AdminModel->getProById($id);
-			$this->load->view("admin/EditProducts",["data"=>$getAllProducts,"cats"=>$getAllCat,"proData"=>$getProById]);
+			$admin = $this->session->userdata("AdminUsers");
+			if($admin == "admin")
+			{
+				
+			if(!empty($id))
+			{
+				$getAllCat = $this->AdminModel->getAllCat();
+				$getAllProducts = $this->AdminModel->getAllProducts();
+				$getProById = $this->AdminModel->getProById($id);
+				$this->load->view("admin/EditProducts",["data"=>$getAllProducts,"cats"=>$getAllCat,"proData"=>$getProById]);
+			}
+			else
+			{
+				$getAllCat = $this->AdminModel->getAllCat();
+				$getAllProducts = $this->AdminModel->getAllProducts();
+				$this->load->view("admin/AddProducts",["data"=>$getAllProducts,"cats"=>$getAllCat]);
+			}
 		}
 		else
 		{
-			$getAllCat = $this->AdminModel->getAllCat();
-			$getAllProducts = $this->AdminModel->getAllProducts();
-			$this->load->view("admin/AddProducts",["data"=>$getAllProducts,"cats"=>$getAllCat]);
+			$this->session->set_flashdata("Feed","Not permission For this Section");
+			return redirect("admin_panel/");
 		}
 	}
 
@@ -37,6 +48,7 @@ class AddProducts extends CI_controller
 	{
 		$cat_id = $this->input->post("catId");
 		$proName = $this->input->post("proName");
+		$price = $this->input->post("price");
 
 		$this->db->where(["cat_id"=>$cat_id,"pro_name"=>$proName]);
 		$chk = $this->db->get("products")->num_rows();
@@ -68,7 +80,7 @@ class AddProducts extends CI_controller
 			    $arr_image = array('upload_data' => $this->upload->data());
 			    //print_r($arr_image);
 			    $pro_img = $arr_image['upload_data']['file_name'];
-			    $this->db->insert("products",["cat_id"=>$cat_id,"pro_name"=>$proName,"pro_img"=>$pro_img]);
+			    $this->db->insert("products",["cat_id"=>$cat_id,"pro_name"=>$proName,"pro_img"=>$pro_img,"price"=>$price]);
 			    $this->session->set_flashdata("Feed","Product Saved Successfully");
 				return redirect("admin_panel/AddProducts");
 			}
@@ -80,10 +92,11 @@ class AddProducts extends CI_controller
 		$cat_id = $this->input->post("catId");
 		$pro_id = $this->input->post("id");
 		$proName = $this->input->post("proName");
+		$price = $this->input->post("price");
 		if($_FILES['pro_mg']['name']=="")
 		{
 				$this->db->where("id",$pro_id);
-				$this->db->update("products",["cat_id"=>$cat_id,"pro_name"=>$proName]);
+				$this->db->update("products",["cat_id"=>$cat_id,"pro_name"=>$proName,"price"=>$price]);
 			    $this->session->set_flashdata("Feed","Product Updated Successfully");
 				return redirect("admin_panel/AddProducts/index/".$pro_id);
 		}
@@ -111,7 +124,7 @@ class AddProducts extends CI_controller
 			    //print_r($arr_image);
 			    $pro_img = $arr_image['upload_data']['file_name'];
 			    $this->db->where("id",$pro_id);
-			    $this->db->update("products",["cat_id"=>$cat_id,"pro_name"=>$proName,"pro_img"=>$pro_img]);
+			    $this->db->update("products",["cat_id"=>$cat_id,"pro_name"=>$proName,"pro_img"=>$pro_img,"price"=>$price]);
 			    $this->session->set_flashdata("Feed","Product Saved Successfully");
 				return redirect("admin_panel/AddProducts/index/".$pro_id);
 			}

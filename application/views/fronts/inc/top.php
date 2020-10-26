@@ -20,12 +20,7 @@
                                     <a href="#"><i class="fa fa-linkedin"></i></a>
                                 </div>
                                 <div class="language pl-30">
-                                    <img src="<?= base_url(); ?>front_assets/img/icon/en.png" alt="flag"> English
-                                    <i class="fa fa-angle-down"></i>
-                                    <ul class="dropdown-list">
-                                        <li><a href="#"><img src="<?= base_url(); ?>front_assets/img/icon/en.png" alt="flag"> English</a></li>
-                                        <li><a href="#"><img src="<?= base_url(); ?>front_assets/img/icon/fr.png" alt="flag"> French</a></li>
-                                    </ul>
+                                    
                                 </div>
                             </div>
                         </div>

@@ -34,6 +34,7 @@
 					<div class="card">
 						<div class="card-header text-center">
 							<h3 class="card-title">Add Members</h3>
+							
 						</div>
 						<div class="card-body">
 							<?php if($feed = $this->session->flashdata("Feed")){ ?>
@@ -86,7 +87,7 @@
 										<option value="Package">Package</option>
 									</select>
 								</div>
-								<div class="form-group col-md-12">
+								<div class="form-group col-md-12"> 
 									<label>Address</label>
 									<input type="text" name="addr" class="form-control" required="required">
 								</div>
@@ -103,9 +104,22 @@
 								</div>
 								<div class="form-group col-md-4">
 									<label>Change Level</label>
-									<select name="levels" class="form-control">
-										<?php for ($i=1; $i < 8; $i++) { ?>
-											<option  value="<?= $i; ?>">CL-<?= $i; ?></option>
+									<?php
+										$this->db->where("user_id",$_GET['under']);
+										$gt = $this->db->get("es_users")->row();
+									?>
+									<select name="levels" class="form-control slct">
+										<?php for ($i=1; $i < $gt->level; $i++) {
+											if($gt->level == $i)
+											{
+												$disb = "disabled";
+											}
+											else
+											{
+												$disb = "";
+											}
+										 ?>
+											<option <?= $disb; ?>  value="<?= $i; ?>">CL-<?= $i; ?></option>
 										<?php } ?>
 									</select>
 								</div>

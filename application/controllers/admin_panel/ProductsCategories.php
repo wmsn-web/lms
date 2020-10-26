@@ -18,16 +18,25 @@ class ProductsCategories extends CI_controller
 
 	public function index($id='')
 	{
-		if(!empty($id))
+		$admin = $this->session->userdata("AdminUsers");
+		if($admin == "admin")
 		{
-			$getAllCat = $this->AdminModel->getAllCat();
-			$getCatById = $this->AdminModel->getCatById($id);
-			$this->load->view("admin/EditCat",["data"=>$getAllCat,"cat"=>$getCatById]);
+			if(!empty($id))
+			{
+				$getAllCat = $this->AdminModel->getAllCat();
+				$getCatById = $this->AdminModel->getCatById($id);
+				$this->load->view("admin/EditCat",["data"=>$getAllCat,"cat"=>$getCatById]);
+			}
+			else
+			{
+				$getAllCat = $this->AdminModel->getAllCat();
+				$this->load->view("admin/ProductsCategories",["data"=>$getAllCat]);
+			}
 		}
 		else
 		{
-			$getAllCat = $this->AdminModel->getAllCat();
-			$this->load->view("admin/ProductsCategories",["data"=>$getAllCat]);
+			$this->session->set_flashdata("Feed","Not permission For this Section");
+			return redirect("admin_panel/");
 		}
 		
 	}

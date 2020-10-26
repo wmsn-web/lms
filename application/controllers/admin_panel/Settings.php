@@ -18,7 +18,16 @@ class Settings extends CI_controller
 
 	public function index()
 	{
-		$this->load->view("admin/Settings");
+		$admin = $this->session->userdata("AdminUsers");
+		if($admin == "admin")
+		{
+			$this->load->view("admin/Settings");
+		}
+		else
+		{
+			$this->session->set_flashdata("Feed","Not permission For this Section");
+			return redirect("admin_panel/");
+		}
 	}
 
 	public function updateSetup()

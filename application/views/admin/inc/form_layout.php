@@ -1,5 +1,5 @@
 <!-- Favicon -->
-		<link rel="icon" href="<?= base_url(); ?>assets/img/brand/favicon.png" type="image/x-icon"/>
+		<link rel="icon" href="<?= base_url(); ?>front_assets/images/favicon.png" type="image/x-icon"/>
 
 		<!-- Icons css -->
 		<link href="<?= base_url(); ?>assets/css/icons.css" rel="stylesheet">

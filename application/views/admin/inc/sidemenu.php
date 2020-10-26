@@ -24,7 +24,9 @@
 						<ul class="slide-menu">
 							<li><a class="slide-item" href="<?= base_url('admin_panel/AddMember'); ?>">Add Member</a></li>
 							<li><a class="slide-item" href="<?= base_url('admin_panel/AllMembers'); ?>">View All Members</a></li>
-							<li><a class="slide-item" href="<?= base_url('admin_panel/ExecutiveMembers'); ?>">Executive Members</a></li>
+							<?php if($this->session->userdata('AdminUsers')=="admin"){ ?>
+								<li><a class="slide-item" href="<?= base_url('admin_panel/ExecutiveMembers'); ?>">Executive Members</a></li>
+							<?php } ?>
 							<li><a class="slide-item" href="<?= base_url('admin_panel/MembersTree'); ?>">Members Tree</a></li>
 						</ul>
 					</li>
@@ -36,35 +38,43 @@
 						<ul class="slide-menu">
 							<li><a class="slide-item" href="<?= base_url('admin_panel/SubmitPurchase'); ?>">Submit Purchase</a></li>
 							<li><a class="slide-item" href="<?= base_url('admin_panel/UserPurchasedHistory'); ?>">All User Purchased History</a></li>
-							<li><a class="slide-item" href="<?= base_url('admin_panel/BusinessReport'); ?>">Business Report</a></li>
+							<?php if($this->session->userdata('AdminUsers')=="admin"){ ?>
+								<li><a class="slide-item" href="<?= base_url('admin_panel/BusinessReport'); ?>">Business Report</a></li>
+
 							<li><a class="slide-item" href="<?= base_url('admin_panel/UserWallet'); ?>">User Wallet</a></li>
 							<li><a class="slide-item" href="<?= base_url('admin_panel/CompanyBusiness'); ?>">Company Business</a></li>
+							<?php } ?>
 							
 						</ul>
 					</li>
-					<li class="slide">
-						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-pie-chart"></i><span class="side-menu__label">Requests</span><i class="angle fe fe-chevron-down"></i></a>
-						<ul class="slide-menu">
-							<li><a class="slide-item" href="<?= base_url('admin_panel/WithdrawRequest'); ?>">Withdraw Request</a></li>
-							<li><a class="slide-item" href="<?= base_url('admin_panel/WithdrawRequestCompleted'); ?>">Withdraw Request Completed</a></li>
+					<?php if($this->session->userdata('AdminUsers')=="admin"){ ?>
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-pie-chart"></i><span class="side-menu__label">Requests</span><i class="angle fe fe-chevron-down"></i></a>
+							<ul class="slide-menu">
+								<li><a class="slide-item" href="<?= base_url('admin_panel/WithdrawRequest'); ?>">Withdraw Request</a></li>
+								<li><a class="slide-item" href="<?= base_url('admin_panel/WithdrawRequestCompleted'); ?>">Withdraw Request Completed</a></li>
+								
+							</ul>
+						</li>
+						<li><h3>Products</h3></li>
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-pie-chart"></i><span class="side-menu__label">Products</span><i class="angle fe fe-chevron-down"></i></a>
+							<ul class="slide-menu">
+								<li><a class="slide-item" href="<?= base_url('admin_panel/ProductsCategories'); ?>">Products Categories</a></li>
+								<li><a class="slide-item" href="<?= base_url('admin_panel/AddProducts'); ?>">Add Products</a></li>
+								
+								
+							</ul>
+						</li>
+						<li><h3>Settings</h3></li>
+						<li class="slide">
+							<a class="side-menu__item"  href="<?= base_url('admin_panel/Settings'); ?>"><i class="side-menu__icon fas fa-cog"></i><span class="side-menu__label">Settings</span></a>
+						</li>
+						<li class="slide">
+							<a class="side-menu__item"  href="<?= base_url('admin_panel/SuperAdmin'); ?>"><i class="side-menu__icon fas fa-users"></i><span class="side-menu__label">Super Admin</span></a>
 							
-						</ul>
-					</li>
-					<li><h3>Products</h3></li>
-					<li class="slide">
-						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-pie-chart"></i><span class="side-menu__label">Products</span><i class="angle fe fe-chevron-down"></i></a>
-						<ul class="slide-menu">
-							<li><a class="slide-item" href="<?= base_url('admin_panel/ProductsCategories'); ?>">Products Categories</a></li>
-							<li><a class="slide-item" href="<?= base_url('admin_panel/AddProducts'); ?>">Add Products</a></li>
-							<li><a class="slide-item" href="<?= base_url('admin_panel/ViewProducts'); ?>">View Products</a></li>
-							
-						</ul>
-					</li>
-					<li><h3>Settings</h3></li>
-					<li class="slide">
-						<a class="side-menu__item"  href="<?= base_url('admin_panel/Settings'); ?>"><i class="side-menu__icon fas fa-cog"></i><span class="side-menu__label">Settings</span></a>
-						
-					</li>
+						</li>
+					<?php } ?>
 					
 					
 					

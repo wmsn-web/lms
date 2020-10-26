@@ -17,9 +17,18 @@ class UserWallet extends CI_controller
 	}
 	public function index()
 	{
-		$data = $this->AdminModel->getUserWallerBal();
-		//print_r($data);
-		$this->load->view("admin/UserWallet",["data"=>$data]);
+		$admin = $this->session->userdata("AdminUsers");
+		if($admin == "admin")
+		{
+			$data = $this->AdminModel->getUserWallerBal();
+			//print_r($data);
+			$this->load->view("admin/UserWallet",["data"=>$data]);
+		}
+		else
+		{
+			$this->session->set_flashdata("Feed","Not permission For this Section");
+			return redirect("admin_panel/");
+		}
 	}
 
 	public function transaction($userId = '')

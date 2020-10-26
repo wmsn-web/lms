@@ -137,7 +137,7 @@
 						else
 						{
 							$("#amt").val(amt);
-							$("#amt").attr("readonly",true);
+							$("#amt").attr("readonly",false);
 						}
 					}
 					else
@@ -148,7 +148,7 @@
 				});
 			});
 
-			function getText(val)
+	function getText(val)
 		{
 			$("#usr").val(val);
 			$(".srcRes").hide();

@@ -18,8 +18,17 @@
 
 	public function index()
 	{
-		$pendingRequest = $this->AdminModel->pendingRequest();
-		$this->load->view("admin/WithdrawRequest",["data"=>$pendingRequest]);
+		$admin = $this->session->userdata("AdminUsers");
+		if($admin == "admin")
+		{
+			$pendingRequest = $this->AdminModel->pendingRequest();
+			$this->load->view("admin/WithdrawRequest",["data"=>$pendingRequest]);
+		}
+		else
+		{
+			$this->session->set_flashdata("Feed","Not permission For this Section");
+			return redirect("admin_panel/");
+		}
 	}
 
 	public function acceptRequest()

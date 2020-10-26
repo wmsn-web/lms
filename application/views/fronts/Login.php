@@ -20,7 +20,7 @@
         <!-- breadcrumb section start -->
         <section class="login">
         	<div class="container">
-	        	<div class="row justify-content-center">
+	        	<div class="row justify-content-center"> 
 	        		<div class="col-md-4 login-bx">
 	        			<h4>Customer Login</h4><br>
 	        			<?php if($feed = $this->session->flashdata("Feed")){ ?>
@@ -41,6 +41,7 @@
 							  <input type="password" class="form-control" name="password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"  required="required">
 							</div>
 							<button class="bnt bnt-primary">Login</button>
+							<a class="text-danger" href="<?= base_url('ForgotPass'); ?>">Forgot Password?</a>
 	        			</form>
 	        		</div>
 	        	</div>

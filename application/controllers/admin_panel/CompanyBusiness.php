@@ -18,14 +18,23 @@ class CompanyBusiness extends CI_controller
 
 	public function index()
 	{
-		date_default_timezone_set('Asia/Kolkata');
-		$Todate = date("Y-m-d");
-		$dt = date_create($Todate);
-		$mnths = date_format($dt,"F");
-		$years = date_format($dt,"Y");
-		$yrMnth = date_format($dt,"F")."-".date_format($dt,"Y");
-		$getCompanyBusiness = $this->AdminModel->getCompanyBusiness($yrMnth);
-		$this->load->view("admin/CompanyBusiness",["data"=>$getCompanyBusiness]);
+		$admin = $this->session->userdata("AdminUsers");
+		if($admin == "admin")
+		{
+			date_default_timezone_set('Asia/Kolkata');
+			$Todate = date("Y-m-d");
+			$dt = date_create($Todate);
+			$mnths = date_format($dt,"F");
+			$years = date_format($dt,"Y");
+			$yrMnth = date_format($dt,"F")."-".date_format($dt,"Y");
+			$getCompanyBusiness = $this->AdminModel->getCompanyBusiness($yrMnth);
+			$this->load->view("admin/CompanyBusiness",["data"=>$getCompanyBusiness]);
+		}
+		else
+		{
+			$this->session->set_flashdata("Feed","Not permission For this Section");
+			return redirect("admin_panel/");
+		}
 	}
 
 	public function getFilter()
@@ -36,8 +45,9 @@ class CompanyBusiness extends CI_controller
 
 		$this->db->where(["level"=>8,"ex_status"=>0]);
 		$getEx = $this->db->get("es_users")->num_rows();
-
-		$eachAmt = $data['amount'] /$getEx;
+		$per = 1/100;
+		$amtt = $data['amount'] * $per;
+		$eachAmt = $amtt /$getEx;
 
 		$array = array("month"=>$yrMnth,"amount"=>$data['amount'],"getEx"=>$getEx, "eachAmt"=>$eachAmt);
 		echo json_encode($array);

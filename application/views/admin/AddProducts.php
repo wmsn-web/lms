@@ -58,6 +58,10 @@
 										<input type="file" name="pro_mg" class="dropify" data-height="100" required="required" />
 									</div>
 									<div class="form-group">
+										<label>Product Price</label>
+										<input type="text" name="price" class="form-control">
+									</div>
+									<div class="form-group">
 										<button class="btn btn-outline-primary">Save</button>
 									</div>
 								</form>
@@ -79,6 +83,7 @@
 												<th>SL</th>
 												<th>Category Name</th>
 												<th>Product Name</th>
+												<th>Price</th>
 												<th>Image</th>
 												<th>Action</th>
 												
@@ -91,6 +96,7 @@
 														<td><?= $sl; ?></td>
 														<td><?= $key['cat_name']; ?></td>
 														<td><?= $key['pro_name']; ?></td>
+														<td><?= $key['price']; ?></td>
 														<td><img src="<?= base_url('uploads/products/'.$key['img']); ?>" width="65"></td>
 														<td>
 															<a href="<?= base_url('admin_panel/AddProducts/index/'.$key['id']); ?>">

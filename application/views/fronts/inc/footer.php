@@ -29,11 +29,10 @@
                             <div class="widget-body">
                                 <ul class="useful-link">
                                     <li><a class="text-white" href="<?= base_url(); ?>">Home</a></li>
-                                    <li><a class="text-white" href="<?= base_url('AboutUs'); ?>">About us</a></li>
+                                    <li><a class="text-white" href="<?= base_url('About'); ?>">About us</a></li>
                                     <li><a class="text-white" href="<?= base_url('Product'); ?>">Product</a></li>
-                                    <li><a class="text-white" href="<?= base_url('Blog'); ?>">Blog</a></li>
                                     <li><a class="text-white" href="<?= base_url('Contact'); ?>">Contact</a></li>
-                                    <li><a class="text-white" href="<?= base_url('MyAccount'); ?>">My Account</a></li>
+                                    <li><a class="text-white" href="<?= base_url('Profile'); ?>">My Account</a></li>
                                     
                                 </ul>
                             </div>
@@ -70,7 +69,7 @@
                         <div class="footer-single-widget mt-40">
                             <h3 class="widget-title text-white">Newsletter</h3>
                             <div class="widget-body news-subtitle">
-                                <p class="desc">Subscribe our Newsletter because occasionallyght ocean he and he can make some of noise to us</p>
+                                <p class="desc text-white">Subscribe our Newsletter because occasionallyght ocean he and he can make some of noise to us</p>
                                 <p><b>To get all latest update and news Subscribe our newsletter now!</b></p>
                                 <div class="newsletter-inner">
                                     <form id="mc-form">
@@ -95,7 +94,7 @@
         <div class="footer-bottom">
             <div class="container">
                 <div class="copyright-text text-center">
-                    <p>Copyright © <a href="<?= base_url(); ?>">Samridhi India</a> 2019</p>
+                    <p>Copyright © <a href="<?= base_url(); ?>">Samridhi India</a> 2019 | Developed by <a href="https://wmsn.in/" target="_blank"> Web Marketing Solutions Network</a></p>
                 </div>
             </div>
         </div>

@@ -33,7 +33,7 @@
 						<button type="button" class="btn btn-success btn-icon mr-3 mt-2 mt-xl-0">
 							<i class="mdi mdi-plus"></i>
 						</button>
-						<button class="btn btn-primary mt-2 mt-xl-0">Download report</button>
+						<button class="btn btn-primary mt-2 mt-xl-0">Download reports</button>
 					</div>
 				</div>
 				<!-- breadcrumb -->
@@ -45,6 +45,9 @@
 				</div>
 				<!-- row closed -->
 			</div>
+			<?php if($feed = $this->session->flashdata("Feed")): ?>
+				<div class="flashd"><?= $feed; ?></div>
+				<?php endif; ?>
 			<!-- Container closed -->
 		</div>
 		<?php include("inc/rightmenu.php"); ?>

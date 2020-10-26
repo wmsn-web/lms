@@ -1,4 +1,4 @@
-		<link rel="icon" href="<?= base_url(); ?>assets/img/brand/favicon.png" type="image/x-icon"/>
+		<link rel="icon" href="<?= base_url(); ?>front_assets/images/favicon.png" type="image/x-icon"/>
 		<link href="<?= base_url(); ?>assets/css/icons.css" rel="stylesheet">
 		<link href="<?= base_url(); ?>assets/plugins/sidebar/sidebar.css" rel="stylesheet">
 		<link href="<?= base_url(); ?>assets/plugins/mscrollbar/jquery.mCustomScrollbar.css" rel="stylesheet"/>

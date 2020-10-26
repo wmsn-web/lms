@@ -94,8 +94,32 @@ class Profile extends CI_controller
 
 	public function MyBusiness()
 	{
+		  date_default_timezone_set('Asia/Kolkata');
+	      $Todate = date("Y-m-d");
+	      $dt = date_create($Todate);
+	      $mnths = date_format($dt,"F");
+	      $years = date_format($dt,"Y");
+	      $yrMnth = date_format($dt,"F")."-".date_format($dt,"Y");
 		$userId = $this->session->userdata("userId");
 		$getMytr = $this->SiteModel->getMytr($userId);
-		$this->load->view("fronts/MyBusiness",["mytr"=>$getMytr]);
+		$getTeambs = $this->SiteModel->getTeambs($userId,$yrMnth);
+		$getMyBs = $this->SiteModel->getMyBs($userId,$yrMnth);
+		$this->load->view("fronts/MyBusiness",["mytr"=>$getMytr,"bisRep"=>$getTeambs,"myBs"=>$getMyBs]);
+	}
+
+	public function GetTmbsByMn()
+	{
+		$userId = $this->input->post("user");
+		$yrMnth = $this->input->post("mnYr");
+		$getTeambs = $this->SiteModel->getTeambs($userId,$yrMnth);
+		echo $getTeambs['bsRep'];
+	}
+
+	public function GetMybsByMn()
+	{
+		$userId = $this->input->post("user");
+		$yrMnth = $this->input->post("mnYr");
+		$getMyBs = $this->SiteModel->getMyBs($userId,$yrMnth);
+		echo $getMyBs['myBsns'];
 	}
 }

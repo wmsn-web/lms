@@ -18,9 +18,18 @@ class BusinessReportUser extends CI_controller
 
 	public function index($user = '',$dates = '')
 	{
-		$userRep = $this->AdminModel->usrReport($user,$dates);
-		//echo "<pre>";
-		//print_r($userRep);
-		$this->load->view("admin/BusinessReportUser",["data"=>$userRep]);
+		$admin = $this->session->userdata("AdminUsers");
+		if($admin == "admin")
+		{
+			$userRep = $this->AdminModel->usrReport($user,$dates);
+			//echo "<pre>";
+			//print_r($userRep);
+			$this->load->view("admin/BusinessReportUser",["data"=>$userRep]);
+		}
+		else
+		{
+			$this->session->set_flashdata("Feed","Not permission For this Section");
+			return redirect("admin_panel/");
+		}
 	}
 }

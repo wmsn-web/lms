@@ -23,12 +23,7 @@
                                     <a href="#"><i class="fa fa-linkedin"></i></a>
                                 </div>
                                 <div class="language pl-30">
-                                    <img src="<?= base_url(); ?>front_assets/img/icon/en.png" alt="flag"> English
-                                    <i class="fa fa-angle-down"></i>
-                                    <ul class="dropdown-list">
-                                        <li><a href="#"><img src="<?= base_url(); ?>front_assets/img/icon/en.png" alt="flag"> English</a></li>
-                                        <li><a href="#"><img src="<?= base_url(); ?>front_assets/img/icon/fr.png" alt="flag"> French</a></li>
-                                    </ul>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -36,7 +31,8 @@
                 </div>
             </div>
             <!-- header top start -->
-            <?php if($this->uri->segment(1)=="Home"): $cls = "header-transparent"; elseif($this->uri->segment(1)==""): $cls = "header-transparent"; else: $cls = ""; endif; ?>
+            <?php if($this->uri->segment(1)=="Home"): $cls = "header-transparent"; elseif($this->uri->segment(1)==""): $cls = "header-transparent";
+             else: $cls = ""; endif; ?>
             <!-- main menu start -->
             <div class="main-menu-wrapper sticky <?= $cls; ?>">
                 <div class="container">
@@ -55,21 +51,20 @@
                                 <!-- main menu navbar start -->
                                 <nav class="main-menu">
                                     <ul>
-                                        <li class="active"><a href="<?= base_url(); ?>">Home</a>
+                                        <li <?php if($this->uri->segment(1)=="Home" || $this->uri->segment(1)==""){ echo "class='active'";}else{ echo "";} ?>><a href="<?= base_url(); ?>">Home</a>
                                         </li>
-                                        <li><a href="<?= base_url('About'); ?>">About us</a></li>
-                                        <li><a href="<?= base_url('Products'); ?>">Products</a>
+                                        <li <?php if($this->uri->segment(1)=="About"){ echo "class='active'";}else{ echo "";} ?>><a href="<?= base_url('About'); ?>">About us</a></li>
+                                        <li <?php if($this->uri->segment(1)=="Products"){ echo "class='active'";}else{ echo "";} ?>><a href="<?= base_url('Products'); ?>">Products</a>
                                         </li>
-                                        <li><a href="<?= base_url('Blog'); ?>">Blog</a>
-                                        </li>
-                                        <li><a href="<?= base_url('Contact'); ?>">Contact</a>
+                                        
+                                        <li <?php if($this->uri->segment(1)=="Contact"){ echo "class='active'";}else{ echo "";} ?>><a href="<?= base_url('Contact'); ?>">Contact</a>
                                         </li>
                                         <?php if($this->session->userdata("userId")): ?>
                                         <li><a href="#">My Account</a>
                                             <ul class="dropdown">
                                                 <li><a href="<?= base_url('Profile'); ?>">Profile</a></li>
                                                 <li><a href="<?= base_url('Profile/MyBusiness'); ?>">My Business</a></li>
-                                                <li><a href="<?= base_url('Profile/MyTransaction'); ?>">My transaction</a></li>
+                                                
                                                 <li><a href="<?= base_url('Home/logout'); ?>">Logout</a></li>
                                             </ul>
                                         </li>
@@ -144,19 +139,19 @@
                                 <li class="menu-item-has-children"><a href="<?= base_url(); ?>">Home</a>
                                     
                                 </li>
-                                <li><a href="<?= base_url('AboutUs'); ?>">about us</a></li>
-                                <li class="menu-item-has-children"><a href="<?= base_url('Product'); ?>">Product</a>
+                                <li><a href="<?= base_url('About'); ?>">about us</a></li>
+                                <li class="menu-item-has-children"><a href="<?= base_url('Products'); ?>">Product</a>
                                     
                                 </li>
-                                <li class="menu-item-has-children"><a href="<?= base_url('Blog'); ?>">blog</a>
+                                
                                     <li class="menu-item-has-children"><a href="<?= base_url('Contact'); ?>">Contact</a>
                                 </li>
                                 <?php if($this->session->userdata("userId")): ?>
                                     <li class="menu-item-has-children"><a href="#">My Account</a>
                                         <ul class="dropdown">
                                             <li><a href="<?= base_url('Profile'); ?>">Profile</a></li>
-                                            <li><a href="<?= base_url('MyBusiness'); ?>">My Business</a></li>
-                                            <li><a href="<?= base_url('MyTransaction'); ?>">My transaction</a></li>
+                                            <li><a href="<?= base_url('Profile/MyBusiness'); ?>">My Business</a></li>
+                                            <li><a href="<?= base_url('Profile/MyBusiness'); ?>">My transaction</a></li>
                                             <li><a href="<?= base_url('Home/logout'); ?>">Logout</a></li>
                                         </ul>
                                     </li>
@@ -177,8 +172,7 @@
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="currency">
-                            <a class="dropdown-item" href="#"><img src="<?= base_url(); ?>front_assets/img/icon/en.png" alt="flag"> English</a>
-                            <a class="dropdown-item" href="#"><img src="<?= base_url(); ?>front_assets/img/icon/fr.png" alt="flag"> French</a>
+                            
                         </div>
                     </div>
                     <!-- language section end -->

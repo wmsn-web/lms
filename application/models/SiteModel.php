@@ -246,4 +246,100 @@ class SiteModel extends CI_model
 
 		return $data;
 	}
+
+	public function getProByCat($id)
+	{
+		$this->db->where("cat_id",$id);
+		$getPro = $this->db->get("products");
+		if($getPro->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $getPro->result();
+			foreach ($res as $key) {
+				
+			$data[] = array
+							(
+								"pro_name" =>$key->pro_name,
+								"img"	=>$key->pro_img,
+								"id"	=>$key->id,
+								"cat_id"=>$key->cat_id,
+								"price"=>$key->price
+							);
+			}
+		}
+
+		return $data;
+	}
+
+	public function getAllProducts5()
+	{
+		$this->db->order_by("id","DESC");
+		$this->db->limit(5);
+		$getPro = $this->db->get("products");
+		if($getPro->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $getPro->result();
+			foreach ($res as $key) {
+				$this->db->where("id",$key->cat_id);
+				$Cat = $this->db->get("categories")->row();
+				$data[] = array
+							(
+								"cat_name" => $Cat->cat_name,
+								"pro_name" =>$key->pro_name,
+								"img"	=>$key->pro_img,
+								"id"	=>$key->id,
+								"price" =>$key->price
+							);
+			}
+		}
+
+		return $data;
+	}
+
+	public function getTeambs($userId,$yrMnth)
+	{
+	  
+
+      $this->db->where(["user_id"=>$userId,"yearmonth"=>$yrMnth]);
+      $gt = $this->db->get("business_report_history");
+      if($gt->num_rows()==0)
+      {
+      	$data = array("bsRep"=>"0.00");
+      }
+      else
+      {
+      	$gts = $gt->row();
+      	$data = array("bsRep"=>$gts->amount);
+      }
+      
+      return $data;
+	}
+
+	public function getMyBs($userId,$yrMnth)
+	{
+		$this->db->where(["user_id"=>$userId,"yearmonth"=>$yrMnth]);
+		$gt = $this->db->get("my_transaction");
+		if($gt->num_rows()==0)
+		{
+			$data = array("myBsns"=>"0.00");
+		}
+		else
+		{
+			$this->db->where(["user_id"=>$userId,"yearmonth"=>$yrMnth]);
+			$this->db->select_sum("amount");
+			$gts = $this->db->get("my_transaction")->row();
+			$data = array("myBsns"=>$gts->amount);
+		}
+		
+
+		return $data;
+
+	}
 }

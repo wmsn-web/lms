@@ -18,8 +18,17 @@ class WithdrawRequestCompleted extends CI_controller
 
 	public function index()
 	{
-		$CompleteRequest = $this->AdminModel->CompleteRequest();
-		$this->load->view("admin/WithdrawRequestCompleted",["data"=>$CompleteRequest]);
+		$admin = $this->session->userdata("AdminUsers");
+		if($admin == "admin")
+		{
+			$CompleteRequest = $this->AdminModel->CompleteRequest();
+			$this->load->view("admin/WithdrawRequestCompleted",["data"=>$CompleteRequest]);
+		}
+		else
+		{
+			$this->session->set_flashdata("Feed","Not permission For this Section");
+			return redirect("admin_panel/");
+		}
 	}
 
 }

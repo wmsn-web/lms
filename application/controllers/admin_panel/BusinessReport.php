@@ -18,15 +18,24 @@ class BusinessReport extends CI_controller
 
 	public function index()
 	{
-		date_default_timezone_set('Asia/Kolkata');
-		$date = date('Y-m-d');
-		$dt = date_create($date);
-		$yrmnth = date_format($dt,"F")."-".date_format($dt,"Y");
+		$admin = $this->session->userdata("AdminUsers");
+		if($admin == "admin")
+		{
+			date_default_timezone_set('Asia/Kolkata');
+			$date = date('Y-m-d');
+			$dt = date_create($date);
+			$yrmnth = date_format($dt,"F")."-".date_format($dt,"Y");
 
-		$getReport = $this->AdminModel->getBusinessReport($yrmnth);
-		//echo "<pre>";
-		//print_r($getReport);
-		$this->load->view("admin/BusinessReport",["report"=>$getReport]);
+			$getReport = $this->AdminModel->getBusinessReport($yrmnth);
+			//echo "<pre>";
+			//print_r($getReport);
+			$this->load->view("admin/BusinessReport",["report"=>$getReport]);
+		}
+		else
+		{
+			$this->session->set_flashdata("Feed","Not permission For this Section");
+			return redirect("admin_panel/");
+		}
 	}
 
 	public function CreateMothlyReport()

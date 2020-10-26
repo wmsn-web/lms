@@ -120,7 +120,7 @@ class AdminModel extends CI_model
 
 	}
 
-	public function submitBalance($userid,$amount,$notes,$purchase_id)
+	public function submitBalance($userid,$amount,$notes,$purchase_id,$updtBy)
 	{
 		$this->db->where("user_id",$userid);
 		$get = $this->db->get("es_users");
@@ -177,7 +177,8 @@ class AdminModel extends CI_model
 							"notice" =>"Purchased by ".$userId,
 							"amount" =>$amount,
 							"date"   =>date('d-m-Y H:i:s'),
-							"yearmonth"=>$monthyear
+							"yearmonth"=>$monthyear,
+							"update_by"=>$updtBy
 
 						);
 			$this->db->insert("transaction_notice",$datas);
@@ -236,7 +237,8 @@ class AdminModel extends CI_model
 							"notice" =>$notes,
 							"amount" =>$amount,
 							"date"   =>date('d-m-Y H:i:s'),
-							"yearmonth"=>$monthyear
+							"yearmonth"=>$monthyear,
+							"update_by"=>$updtBy
 
 						);
 			$this->db->insert("my_transaction",$datas2);
@@ -730,7 +732,16 @@ function side_check($under_userid,$side){
 			$getExs = $this->db->get("es_users");
 			$rowEx = $getExs->row();
 			$getEx = $getExs->num_rows();
-			$eachAmt = $row->amount/$getEx;
+			$per = 1/100;
+			$amtt = $row->amount * $per;
+			if($getEx == 0)
+			{
+				$eachAmt = 0;
+			}
+			else
+			{
+				$eachAmt = $amtt /$getEx;
+			}
 			$data = array
 						(
 							"month"	=>$yrMnth,
@@ -920,14 +931,15 @@ function side_check($under_userid,$side){
 		{
 			$res = $getPro->result();
 			foreach ($res as $key) {
-				$this->db->where("id",$key->id);
+				$this->db->where("id",$key->cat_id);
 				$Cat = $this->db->get("categories")->row();
 				$data[] = array
 							(
 								"cat_name" => $Cat->cat_name,
 								"pro_name" =>$key->pro_name,
 								"img"	=>$key->pro_img,
-								"id"	=>$key->id
+								"id"	=>$key->id,
+								"price" =>$key->price
 							);
 			}
 		}
@@ -951,8 +963,46 @@ function side_check($under_userid,$side){
 								"pro_name" =>$key->pro_name,
 								"img"	=>$key->pro_img,
 								"id"	=>$key->id,
-								"cat_id"=>$key->cat_id
+								"cat_id"=>$key->cat_id,
+								"price"=>$key->price
 							);
+		}
+
+		return $data;
+	}
+
+	public function getSuperAdmin()
+	{
+		$this->db->where("admin_user!=","admin");
+		$get = $this->db->get("admin");
+		if($get->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $get->result();
+			foreach ($res as $key) {
+				$this->db->where("user_id",$key->admin_user);
+				$get2 = $this->db->get("es_users");
+				if($get2->num_rows()==0)
+				{
+					$name = "";
+				}
+				else
+				{
+					$row = $get2->row();
+					$name = $row->name;
+				}
+
+				$data[] = array
+								(
+									"adminId"=>$key->admin_user,
+									"name" =>$name,
+									"id" =>$key->id,
+									"status"=>$key->status
+								);
+			}
 		}
 
 		return $data;

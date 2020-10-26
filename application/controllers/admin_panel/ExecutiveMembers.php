@@ -18,8 +18,17 @@ class ExecutiveMembers extends CI_controller
 
 	public function index()
 	{
-		$getExecutiveMembers = $this->AdminModel->getExecutiveMembers();
-		$this->load->view("admin/ExecutiveMembers",["data"=>$getExecutiveMembers]);
+		$admin = $this->session->userdata("AdminUsers");
+		if($admin == "admin")
+		{
+			$getExecutiveMembers = $this->AdminModel->getExecutiveMembers();
+			$this->load->view("admin/ExecutiveMembers",["data"=>$getExecutiveMembers]);
+		}
+		else
+		{
+			$this->session->set_flashdata("Feed","Not permission For this Section");
+			return redirect("admin_panel/");
+		}
 	}
 
 	public function SuspendUser($userId='')

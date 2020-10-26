@@ -423,3 +423,157 @@ table.dataTable {
 @media (prefers-reduced-motion: reduce) {
   .dataTables_wrapper .dataTables_paginate .paginate_button {
     transition: none; } }
+
+.product-div
+{
+  padding: 6px;
+  border:solid 1px #ccc;
+  box-shadow: 2px 2px 20px grey;
+  margin-bottom: 15px;
+}
+.pro_img
+{
+  text-align: center;
+  padding: 8px;
+}
+.pro_img img
+{
+  max-width: 100%;
+}
+.rating
+{
+  display: inline-block;
+}
+.rating li
+{
+  display: inline-block;
+  list-style-type: none;
+  color: #FF6800;
+}
+.orange
+{
+  color: #FF6800;
+}
+.pro-price
+{
+  font-style: italic;
+  font-size: 14px;
+}
+.pro-des
+{
+  font-size: 12px;
+  color: #979797;
+}
+.pro-title
+{
+  color: #FF6800;
+  font-size: 14px;
+  font-weight: bold;
+}
+.badges
+{
+  position: relative;
+  margin-left: -6px;
+  margin-top: -10px;
+  display: inline-block;
+  padding: 2px 24px;
+  background: #f00;
+  font-size: 11px;
+  color: #fff;
+  height: 23px;
+}
+.bxblank
+{
+  position: absolute;
+  margin-left: -6px;
+  margin-top: 5px;
+  display: inline-block;
+  background: #fff;
+  width: 23px;
+  height: 23px;
+  transform: rotate(45deg);
+  
+}
+.section-paddings
+{
+  padding-top: 25px;
+  padding-bottom: 55px;
+}
+.pad-15
+{
+  padding-bottom: 35px;
+}
+.cats
+{
+  display: inline-block;
+}
+.cats .catBtns
+{
+  padding: 4px 15px;
+  border:solid 1px #0046FF;
+  text-shadow: none;
+  font-size: 12px;
+  border-radius: 45px;
+  margin-bottom: 10px;
+}
+.cats .catBtn
+{
+  padding: 4px 15px;
+  border:solid 1px #0046FF;
+  text-shadow: none;
+  font-size: 12px;
+  border-radius: 45px;
+  margin-bottom: 10px;
+}
+.cats .catBtn:hover
+{
+  border:solid 1px #0046FF;
+  color: #FFFFFF;
+  background: #0046FF;
+}
+.catBtn-pri
+{
+  color: #0046FF;
+}
+.catBtn-active
+{
+  border:solid 1px #0046FF;
+  color: #FFFFFF;
+  background: #0046FF;
+}
+
+.businessRep
+{
+  padding: 15px;
+  border:solid 1px #ccc;
+  box-shadow: 2px 2px 15px gray;
+  background: #5900FF;
+  border-radius: 10px;
+  text-align: center;
+}
+.businessRep .ttl
+{
+  text-align: center;
+  color: #fff;
+  font-size: 26px;
+}
+.bsAmt
+{
+  padding: 15px;
+}
+.businessRep .bsAmt h3
+{
+  text-align: center;
+  color: #fff;
+  font-size: 22px;
+
+}
+.trns:hover
+{
+  transition: .2s;
+  font-size:18px;
+}
+.slct option
+{
+  cursor: pointer;
+}

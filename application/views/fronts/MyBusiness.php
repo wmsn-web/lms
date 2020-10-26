@@ -22,10 +22,14 @@
     <?php include("inc/menu.php"); ?>
     <main>
       <?php
-        date_default_timezone_set("Asia/Kolkata");
-        $date = date('Y-m-d');
-        $dt = date_create($date);
-        $yrmnth = date_format($dt,"F")."-".date_format($dt,'Y');
+        
+          date_default_timezone_set('Asia/Kolkata');
+          $Todate = date("Y-m-d");
+          $dt = date_create($Todate);
+          $mnths = date_format($dt,"F");
+          $years = date_format($dt,"Y");
+          $yrMnth = date_format($dt,"F")."-".date_format($dt,"Y");
+        
       ?>
         <!-- breadcrumb section start -->
         <div class="breadcrumb-area top-45">
@@ -69,26 +73,68 @@
                         <div class="card-body">
                           <h3>Team Business Report</h3>
                           <hr>
-                          <div class="table-responsive">
-                            <table id="example3" class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                      <th>SL</th>
-                                      <th>User ID</th>
-                                      <th>Name</th>
-                                      <th>Amount</th>
-                                      <th>Month</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="hh">
-                                    <td>1</td>
-                                    <td>sdfsdfs</td>
-                                    <td>sdfsdfs</td>
-                                    <td>sdfsdfs</td>
-                                    <td>sdfsdfs</td>
-                                </tbody>
-                            </table>
-                          </div>
+                          <div class="row">
+                              <div class="col-md-3">&nbsp;</div>
+                              <div class="col-md-3">
+                                  <div class="businessRep">
+                                      <h3 class="ttl">My Business</h3>
+                                      <div class="bsAmt">
+                                          <h3 id="myBsAmt">&#8377; <?= $myBs['myBsns']; ?>/-</h3>
+                                      </div>
+                                      <div class="bsSlct">
+                                          <select id="mnth">
+                                                <?php
+                                                  $mn = $this->db->get("months")->result();
+                                                  foreach($mn as $m):
+                                                    if($m->month == $mnths): $slct = "selected"; else: $slct=""; endif;
+                                                ?>
+                                                  <option value="<?= $m->month; ?>" <?= $slct; ?>><?= $m->month; ?></option>
+                                                <?php endforeach; ?>
+                                              </select>
+                                              <select id="year">
+                                                <?php
+                                                  for ($i=1999; $i < 2051; $i++):
+                                                    if($i == $years): $slct = "selected"; else: $slct = "";
+                                                    endif;
+                                                ?>
+                                                  <option <?= $slct; ?> value="<?= $i; ?>"><?= $i; ?></option>
+                                                <?php endfor; ?>
+                                              </select>
+                                              <i class="fa fa-search text-white cp trns" id="myBs"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-3">
+                                  <div class="businessRep">
+                                      <h3 class="ttl">Team Business</h3>
+                                      <div class="bsAmt">
+                                          <h3 id="TmbsAmt">&#8377; <?= $bisRep['bsRep']; ?>/-</h3>
+
+                                      </div>
+                                      <div class="bsSlct">
+                                          <select id="mn">
+                                                <?php
+                                                  $mn = $this->db->get("months")->result();
+                                                  foreach($mn as $m):
+                                                    if($m->month == $mnths): $slct = "selected"; else: $slct=""; endif;
+                                                ?>
+                                                  <option value="<?= $m->month; ?>" <?= $slct; ?>><?= $m->month; ?></option>
+                                                <?php endforeach; ?>
+                                              </select>
+                                              <select id="yr">
+                                                <?php
+                                                  for ($i=1999; $i < 2051; $i++):
+                                                    if($i == $years): $slct = "selected"; else: $slct = "";
+                                                    endif;
+                                                ?>
+                                                  <option <?= $slct; ?> value="<?= $i; ?>"><?= $i; ?></option>
+                                                <?php endfor; ?>
+                                              </select>
+                                              <i class="fa fa-search text-white cp trns" id="tmBs"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-3">&nbsp;</div>
                         </div>
                       </div>
                     </div>
@@ -123,6 +169,40 @@
     <script src="<?= base_url(); ?>assets/plugins/datatable/js/responsive.bootstrap4.min.js"></script>
     <script type="text/javascript">
     	$(document).ready(function(){
+          $("#tmBs").click(function(){
+            user = "<?= $this->session->userdata('userId'); ?>";
+            mn = $("#mn").val();
+            yr = $("#yr").val();
+            mnYr = mn+"-"+yr;
+              $.post("<?= base_url('Profile/GetTmbsByMn'); ?>",
+                    {
+                      user: user,
+                      mnYr: mnYr
+                    },
+                    function(response,status)
+                    {
+                      $("#TmbsAmt").html("&#8377; "+response+"/-");
+                    }
+
+                )
+          });
+          $("#myBs").click(function(){
+            user = "<?= $this->session->userdata('userId'); ?>";
+            mn = $("#mnth").val();
+            yr = $("#year").val();
+            mnYr = mn+"-"+yr;
+              $.post("<?= base_url('Profile/GetMybsByMn'); ?>",
+                    {
+                      user: user,
+                      mnYr: mnYr
+                    },
+                    function(response,status)
+                    {
+                      $("#myBsAmt").html("&#8377; "+response+"/-");
+                    }
+
+                )
+          })
                 $('#example2').DataTable({
             responsive: true,
             language: {

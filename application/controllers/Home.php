@@ -7,7 +7,8 @@ class Home extends CI_controller
 	
 	function index()
 	{
-		$this->load->view("fronts/home");
+		$allpro = $this->SiteModel->getAllProducts5();
+		$this->load->view("fronts/home",["data"=>$allpro]);
 	}
 	public function logout()
 	{
